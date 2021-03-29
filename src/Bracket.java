@@ -6,6 +6,9 @@ import java.io.Serializable;
  * Created by Matt and Dan on 5/1/2017.
  * Contributor: Hillary Ssemakula 5/1
  */
+
+// test comment AL
+
 public class Bracket implements Serializable //Hillary: This bracket class is to implement the serializable interface inorder to be serialized
 {
     //Attributes
