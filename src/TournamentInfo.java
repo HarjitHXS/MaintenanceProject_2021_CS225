@@ -21,40 +21,40 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
      * the teams HashMap using their name as the key and the actual Team object as the data.
      * @authors Artem, Rodrigo
      */
+
     private void loadFromFile() throws IOException{
 
-        String name;
-        String nickname;
-        String info;
-        int ranking;
-        double offensivePPG;
-        double defensivePPG;
+    String name;
+    String nickname;
+    String info;
+    int ranking;
+    double offensivePPG;
+    double defensivePPG;
 
 
-        try{
-            InputStream u = getClass().getResourceAsStream("teamInfo.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(u));
+    try{
+    BufferedReader br = new BufferedReader(new FileReader("teamInfo.txt"));
 
-            while((name = br.readLine()) != null){
-            	nickname = br.readLine();
-                info = br.readLine();
-                ranking = Integer.parseInt(br.readLine());
-                offensivePPG = Double.parseDouble(br.readLine());
-                defensivePPG = Double.parseDouble(br.readLine());
-                
-                Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
+    while((name = br.readLine()) != null){
+    nickname = br.readLine();
+    info = br.readLine();
+    ranking = Integer.parseInt(br.readLine());
+    offensivePPG = Double.parseDouble(br.readLine());
+    defensivePPG = Double.parseDouble(br.readLine());
 
-                br.readLine();   //gets rid of empty line between team infos
+    Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
 
-                teams.put(newTeam.getName(), newTeam);   //map team name with respective team object
-            }
+    br.readLine();   //gets rid of empty line between team infos
 
-            br.close();
+    teams.put(newTeam.getName(), newTeam);   //map team name with respective team object
+    }
 
-        }
-        catch(IOException ioe) {
-            throw ioe;
-        }
+    br.close();
+
+    }
+    catch(IOException ioe) {
+    throw ioe;
+    }
     }
 
     /**
@@ -112,19 +112,18 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
      * @authors Matt, Artem
      * @return ArrayList of Strings
      */
-    public ArrayList<String> loadStartingBracket() throws IOException{
+    public static ArrayList<String> loadStartingBracket() throws IOException{
         String name;
         ArrayList<String> starting = new ArrayList<String>();
 
 
         try{
-            InputStream u = getClass().getResourceAsStream("initialMatches.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(u));
+            BufferedReader br = new BufferedReader(new FileReader("initialMatches.txt"));
 
             while((name = br.readLine()) != null){
                 starting.add(name);
             }
-            
+
             br.close();
         }
         catch(IOException ioe){
