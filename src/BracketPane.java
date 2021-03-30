@@ -216,7 +216,7 @@ public class BracketPane extends BorderPane {
                                 t.setEffect(new InnerShadow(10, Color.CHARTREUSE));
                         });
                         t.setOnMouseExited(mouseEvent -> {
-                                t.setStyle("-fx-background-color: DEEPSKYBLUE;");
+                                t.setStyle("-fx-background-color: #449ec9\n;");
                                 t.setEffect(null);
                         });
                         t.setOnMouseClicked(mouseEvent -> {
@@ -316,7 +316,7 @@ public class BracketPane extends BorderPane {
                 Text t = new Text(name);
                 t.setTextAlignment(TextAlignment.CENTER);
                 pane.getChildren().addAll(r, t);
-                pane.setStyle("-fx-background-color: DEEPSKYBLUE;");
+                pane.setStyle("-fx-background-color: #449ec9;");
                 return pane;
         }
 
@@ -349,9 +349,9 @@ public class BracketPane extends BorderPane {
                 nodeFinal2.setOnMouseClicked(clicked);
                 nodeFinal2.setOnMouseDragEntered(enter);
                 nodeFinal2.setOnMouseDragExited(exit);
-                nodeFinal0.setStyle("-fx-border-color: darkblue");
-                nodeFinal1.setStyle("-fx-border-color: darkblue");
-                nodeFinal2.setStyle("-fx-border-color: darkblue");
+                nodeFinal0.setStyle("-fx-border-color: #18284a");
+                nodeFinal1.setStyle("-fx-border-color: #18284a");
+                nodeFinal2.setStyle("-fx-border-color: #18284a");
                 finalPane.setMinWidth(400.0);
 
                 return finalPane;
@@ -454,6 +454,8 @@ public class BracketPane extends BorderPane {
                         // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
                         name.setTranslateX(5);
                         getChildren().addAll(name, rect);
+                        name.setStyle("-fx-font-family: Futura; -fx-font-weight: Bold" +
+                                "h1 {\tcolor: #16284f;\n}");
                 }
 
                 /**
