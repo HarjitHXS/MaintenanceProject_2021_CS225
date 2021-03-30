@@ -1,44 +1,54 @@
+import javax.swing.text.html.ImageView;
+import java.awt.*;
+
 /**
  * 
  * @author Shivanie and Tyler
  * @description 
- *       Team class holds all the information for individual teams. Their name, info, and ranking.
+ *       Team class holds all the information for individual teams. Their displayName, info, and ranking.
  *       
  */
 
 public class Team{
 
-  private String name;
+  private String fullName;
+  private String displayName;
   private String nickname;
   private String info;
   private int ranking;
+  private String logoRef;
   public double offensePPG;
   public double defensePPG;
+  private ImageView logo;
   
   /**
    * Constructor
-   * @param name 
-   *        The name of the team
+   * @param displayName 
+   *        The displayName of the team
    * @param info
    * 		A short description of the team
    * @param ranking
    * 		The ranking in the team region from 1 to 16
    */
-  public Team(String name, String nickname, String info, int ranking, double oPPG, double dPPG){
-    this.name = name;
+  public Team(String displayName, String nickname, String info, int ranking,
+              double oPPG, double dPPG, String logoRef, String fullname){
+    this.displayName = displayName;
     this.nickname = nickname;
     this.info = info;
     this.ranking = ranking;
     offensePPG = oPPG;
     defensePPG = dPPG;
+    this.logoRef = logoRef;
+    this.fullName = fullname;
+
   }
-    
+
   /**
    * 
-   * @return name the name of the team
+   * @return displayName the displayName of the team
    */
-  public String getName(){
-    return name;
+  public String getDisplayName(){
+    return displayName;
   }
   
   /**
@@ -80,7 +90,15 @@ public class Team{
   public double getDefensePPG(){
     return defensePPG;
   }
-  
+
+  /**
+   *
+   * @return fullName
+   */
+  public String getFullName() {
+    return fullName;
+  }
+
   /**
    * 
    * @param info 
@@ -121,5 +139,9 @@ public class Team{
    */
   public void setOffense(double newOffense){
 	  offensePPG =  newOffense;
+  }
+
+  public String getLogoRef() {
+    return logoRef;
   }
 }

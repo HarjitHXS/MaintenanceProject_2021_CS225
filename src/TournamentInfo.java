@@ -23,12 +23,14 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
      */
     private void loadFromFile() throws IOException{
 
+        String fullname;
         String name;
         String nickname;
         String info;
         int ranking;
         double offensivePPG;
         double defensivePPG;
+        String logoRef;
 
 
         try{
@@ -41,12 +43,16 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
                 ranking = Integer.parseInt(br.readLine());
                 offensivePPG = Double.parseDouble(br.readLine());
                 defensivePPG = Double.parseDouble(br.readLine());
+                logoRef = br.readLine();
+                fullname = br.readLine();
+
                 
-                Team newTeam = new Team(name, nickname, info, ranking, offensivePPG, defensivePPG); //creates team with info
+                Team newTeam = new Team(name, nickname, info, ranking, offensivePPG,
+                        defensivePPG, logoRef, fullname); //creates team with info
 
                 br.readLine();   //gets rid of empty line between team infos
 
-                teams.put(newTeam.getName(), newTeam);   //map team name with respective team object
+                teams.put(newTeam.getDisplayName(), newTeam);   //map team name with respective team object
             }
 
             br.close();

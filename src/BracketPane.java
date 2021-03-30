@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -101,21 +102,26 @@ public class BracketPane extends BorderPane {
                 //added by matt 5/7, shows the teams info if you right click
                 else if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
                         String text = "";
+                        String logoRef = "";
                         BracketNode n = (BracketNode) mouseEvent.getSource();
                         int treeNum = bracketMap.get(n);
-                        String teamName = currentBracket.getBracket().get(treeNum);
+                        String displayName = currentBracket.getBracket().get(treeNum);
                         try {
                                 TournamentInfo info = new TournamentInfo();
-                                Team t = info.getTeam(teamName);
+                                Team t = info.getTeam(displayName);
+                                logoRef = t.getLogoRef();
                                 //by Tyler - added the last two pieces of info to the pop up window
-                                text += "Team: " + teamName + " | Ranking: " + t.getRanking() + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo() + "\nAverage Offensive PPG: " + t.getOffensePPG() + "\nAverage Defensive PPG: "+ t.getDefensePPG();
+                                text += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking() + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo() + "\nAverage Offensive PPG: " + t.getOffensePPG() + "\nAverage Defensive PPG: "+ t.getDefensePPG();
                         } catch (IOException e) {//if for some reason TournamentInfo isnt working, it will display info not found
-                                text += "Info for " + teamName + "not found";
+                                text += "Info for " + displayName + "not found";
                         }
                         //create a popup with the team info
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
                         alert.setTitle("March Madness Bracket Simulator");
                         alert.setHeaderText(null);
+
+                        alert.setGraphic(new ImageView(this.getClass().getResource("TeamLogos/"+logoRef).toString()));
+
                         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                         alert.showAndWait();
                 }
@@ -206,11 +212,11 @@ public class BracketPane extends BorderPane {
 
                 for (StackPane t : buttons) {
                         t.setOnMouseEntered(mouseEvent -> {
-                                t.setStyle("-fx-background-color: lightblue;");
-                                t.setEffect(new InnerShadow(10, Color.LIGHTCYAN));
+                                t.setStyle("-fx-background-color: CHARTREUSE;");
+                                t.setEffect(new InnerShadow(10, Color.CHARTREUSE));
                         });
                         t.setOnMouseExited(mouseEvent -> {
-                                t.setStyle("-fx-background-color: orange;");
+                                t.setStyle("-fx-background-color: DEEPSKYBLUE;");
                                 t.setEffect(null);
                         });
                         t.setOnMouseClicked(mouseEvent -> {
@@ -310,7 +316,7 @@ public class BracketPane extends BorderPane {
                 Text t = new Text(name);
                 t.setTextAlignment(TextAlignment.CENTER);
                 pane.getChildren().addAll(r, t);
-                pane.setStyle("-fx-background-color: orange;");
+                pane.setStyle("-fx-background-color: DEEPSKYBLUE;");
                 return pane;
         }
 
@@ -424,45 +430,45 @@ public class BracketPane extends BorderPane {
          * The BracketNode model for the Graphical display of the "Bracket"
          */
         private class BracketNode extends Pane {
-                private String teamName;
+                private String displayName;
                 private Rectangle rect;
                 private Label name;
 
                 /**
                  * Creates a BracketNode with,
                  *
-                 * @param teamName The name if any
+                 * @param displayName The name if any
                  * @param x        The starting x location
                  * @param y        The starting y location
                  * @param rX       The width of the rectangle to fill pane
                  * @param rY       The height of the rectangle
                  */
-                public BracketNode(String teamName, int x, int y, int rX, int rY) {
+                public BracketNode(String displayName, int x, int y, int rX, int rY) {
                         this.setLayoutX(x);
                         this.setLayoutY(y);
                         this.setMaxSize(rX, rY);
-                        this.teamName = teamName;
+                        this.displayName = displayName;
                         rect = new Rectangle(rX, rY);
                         rect.setFill(Color.TRANSPARENT);
-                        name = new Label(teamName);
+                        name = new Label(displayName);
                         // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
                         name.setTranslateX(5);
                         getChildren().addAll(name, rect);
                 }
 
                 /**
-                 * @return teamName The teams name.
+                 * @return displayName The teams name.
                  */
                 public String getName() {
-                        return teamName;
+                        return displayName;
                 }
 
                 /**
-                 * @param teamName The name to assign to the node.
+                 * @param displayName The name to assign to the node.
                  */
-                public void setName(String teamName) {
-                        this.teamName = teamName;
-                        name.setText(teamName);
+                public void setName(String displayName) {
+                        this.displayName = displayName;
+                        name.setText(displayName);
                 }
         }
 }
