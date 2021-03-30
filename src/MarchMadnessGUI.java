@@ -90,8 +90,8 @@ public class MarchMadnessGUI extends Application {
         //try to load all the files, if there is an error display it
         try{
             teamInfo=new TournamentInfo();
-            startingBracket= new Bracket(TournamentInfo.loadStartingBracket());
-            simResultBracket=new Bracket(TournamentInfo.loadStartingBracket());
+            startingBracket= new Bracket(teamInfo.loadStartingBracket());
+            simResultBracket=new Bracket(teamInfo.loadStartingBracket());
         } catch (IOException ex) {
             showError(new Exception("Can't find "+ex.getMessage(),ex),true);
         }
