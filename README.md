@@ -16,4 +16,5 @@ git pull
 git add src/
 git commit -m "Some Commit Message"
 git push
+<<<<<<< HEAD
 ```

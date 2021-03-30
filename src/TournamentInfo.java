@@ -33,9 +33,8 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         String logoRef;
 
 
-        try{
-            InputStream u = getClass().getResourceAsStream("teamInfo.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(u));
+    try{
+    BufferedReader br = new BufferedReader(new FileReader("teamInfo.txt"));
 
             while((name = br.readLine()) != null){
             	nickname = br.readLine();
@@ -46,11 +45,11 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
                 logoRef = br.readLine();
                 fullname = br.readLine();
 
-                
+
                 Team newTeam = new Team(name, nickname, info, ranking, offensivePPG,
                         defensivePPG, logoRef, fullname); //creates team with info
 
-                br.readLine();   //gets rid of empty line between team infos
+    br.readLine();   //gets rid of empty line between team infos
 
                 teams.put(newTeam.getDisplayName(), newTeam);   //map team name with respective team object
             }
