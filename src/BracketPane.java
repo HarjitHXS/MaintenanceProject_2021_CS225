@@ -17,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -113,8 +114,12 @@ public class BracketPane extends BorderPane {
                                 Team t = info.getTeam(displayName);
                                 logoRef = t.getLogoRef();
                                 //by Tyler - added the last two pieces of info to the pop up window
-                                text += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking() + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo() + "\nAverage Offensive PPG: " + t.getOffensePPG() + "\nAverage Defensive PPG: "+ t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo isnt working, it will display info not found
+                                text += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
+                                        + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
+                                        + "\nAverage Offensive PPG: " + t.getOffensePPG()
+                                        + "\nAverage Defensive PPG: "+ t.getDefensePPG();
+                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
+                                // will display info not found
                                 text += "Info for " + displayName + "not found";
                         }
                         //create a popup with the team info
@@ -122,7 +127,7 @@ public class BracketPane extends BorderPane {
                         alert.setTitle("March Madness Bracket Simulator");
                         alert.setHeaderText(null);
 
-                        alert.setGraphic(new ImageView(this.getClass().getResource("TeamLogos/"+logoRef).toString()));
+                        alert.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
 
                         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                         alert.showAndWait();
@@ -133,8 +138,8 @@ public class BracketPane extends BorderPane {
          */
         private EventHandler<MouseEvent> enter = mouseEvent -> {
                 BracketNode tmp = (BracketNode) mouseEvent.getSource();
-                tmp.setStyle("-fx-background-color: lightcyan;");
-                tmp.setEffect(new InnerShadow(10, Color.LIGHTCYAN));
+                tmp.setStyle("-fx-background-color: lightgreen;");
+                tmp.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
         };
 
         /**
@@ -213,12 +218,13 @@ public class BracketPane extends BorderPane {
                 this.setCenter(buttonGrid);
 
                 for (StackPane t : buttons) {
+                        t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
                         t.setOnMouseEntered(mouseEvent -> {
-                                t.setStyle("-fx-background-color: CHARTREUSE;");
-                                t.setEffect(new InnerShadow(10, Color.CHARTREUSE));
+                                t.setStyle("-fx-background-color: LIGHTGREEN; -fx-font-family: Futura;");
+                                t.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
                         });
                         t.setOnMouseExited(mouseEvent -> {
-                                t.setStyle("-fx-background-color: DEEPSKYBLUE;");
+                                t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
                                 t.setEffect(null);
                         });
                         t.setOnMouseClicked(mouseEvent -> {
@@ -342,7 +348,7 @@ public class BracketPane extends BorderPane {
                 Text t = new Text(name);
                 t.setTextAlignment(TextAlignment.CENTER);
                 pane.getChildren().addAll(r, t);
-                pane.setStyle("-fx-background-color: DEEPSKYBLUE;");
+                pane.setStyle("-fx-background-color: #8bc4de;");
                 return pane;
         }
 
@@ -375,9 +381,9 @@ public class BracketPane extends BorderPane {
                 nodeFinal2.setOnMouseClicked(clicked);
                 nodeFinal2.setOnMouseDragEntered(enter);
                 nodeFinal2.setOnMouseDragExited(exit);
-                nodeFinal0.setStyle("-fx-border-color: darkblue");
-                nodeFinal1.setStyle("-fx-border-color: darkblue");
-                nodeFinal2.setStyle("-fx-border-color: darkblue");
+                nodeFinal0.setStyle("-fx-border-color: #18284a");
+                nodeFinal1.setStyle("-fx-border-color: #18284a");
+                nodeFinal2.setStyle("-fx-border-color: #18284a");
                 finalPane.setMinWidth(400.0);
 
                 return finalPane;
@@ -477,8 +483,8 @@ public class BracketPane extends BorderPane {
                         rect = new Rectangle(rX, rY);
                         rect.setFill(Color.TRANSPARENT);
                         name = new Label(displayName);
-                        // setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
                         name.setTranslateX(5);
+                        name.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
                         getChildren().addAll(name, rect);
                 }
 

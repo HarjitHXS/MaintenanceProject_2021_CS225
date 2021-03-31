@@ -176,7 +176,7 @@ public class MarchMadnessGUI extends Application {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(" Logout");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to logout? ");
+        alert.setContentText("Are you sure you want to logout?");
 
         alert.showAndWait();
 
@@ -313,7 +313,7 @@ public class MarchMadnessGUI extends Application {
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
         login=new Button("Login");
-        logout=new Button("logout");
+        logout=new Button("Logout");
         simulate=new Button("Simulate");
         scoreBoardButton=new Button("ScoreBoard");
         viewBracketButton= new Button("View Simulated Bracket");

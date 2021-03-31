@@ -102,10 +102,10 @@ public class Bracket implements Serializable //Hillary: This bracket class is to
             int child1 = 2 * root + 1;
             int child2 = 2 * root + 2;
 
-            if (child1 < 63) {//child is above round 1
+            if (child1 < 64) {//child is above round 1
                 resetSubtree(child1);
             }
-            if (child2 < 63) {
+            if (child2 < 64) {
                 resetSubtree(child2);
             }
             bracket.set(root, "");
@@ -185,7 +185,8 @@ public class Bracket implements Serializable //Hillary: This bracket class is to
     
     /** 
       * Hillary:
-      * returns true or false depending on whether there are any empty slots in te bracket from a given point all the way to the starting 64 teams.
+      * returns true or false depending on whether there are any empty slots in te bracket from a given point all
+     * the way to the starting 64 scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());s.
       * If the root itself is empty return false. otherwise the method is recursively applied to the left and right subtrees of the root.
       * @param root, the int index of the root
       * @return boolean
