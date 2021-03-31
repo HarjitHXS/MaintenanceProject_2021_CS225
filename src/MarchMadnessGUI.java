@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -255,11 +257,16 @@ public class MarchMadnessGUI extends Application {
 
 
     private void close(){
-        JOptionPane result = new JOptionPane();
-        int dialogResult = JOptionPane.showConfirmDialog(result, "Are you sure want to Quit?",
-                "Quit", JOptionPane.YES_NO_OPTION);
-        if (dialogResult == JOptionPane.NO_OPTION)
-            ;
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure want to Exit?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.CANCEL){
+            // ... user chose OK
+        }
+            // ... user chose CANCEL or closed the dialog
         else
             System.exit(0);
     }
