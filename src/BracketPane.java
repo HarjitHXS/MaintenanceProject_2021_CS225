@@ -2,10 +2,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -68,6 +65,7 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
+
         /**
          * Clears the entries of a team future wins
          *
@@ -123,6 +121,13 @@ public class BracketPane extends BorderPane {
                                 text += "Info for " + displayName + "not found";
                         }
                         //create a popup with the team info
+
+                        /*
+                        Tooltip tooltip = new Tooltip();
+                        tooltip.setText(text);
+                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
+                         */
+
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
                         alert.setTitle("March Madness Bracket Simulator");
                         alert.setHeaderText(null);
@@ -208,7 +213,7 @@ public class BracketPane extends BorderPane {
                 panes.put(buttons.get((buttons.size() - 1)), fullPane);
                 finalPane.toBack();
 
-                // Initializes the button grid
+                //  ializes the button grid
                 GridPane buttonGrid = new GridPane();
                 for (int i = 0; i < buttons.size(); i++)
                         buttonGrid.add(buttons.get(i), 0, i);
@@ -486,6 +491,8 @@ public class BracketPane extends BorderPane {
                         name.setTranslateX(5);
                         name.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
                         getChildren().addAll(name, rect);
+                        //setToolTip();
+
                 }
 
                 /**
@@ -501,6 +508,27 @@ public class BracketPane extends BorderPane {
                 public void setName(String displayName) {
                         this.displayName = displayName;
                         name.setText(displayName);
+                }
+
+                private void setToolTip() {
+                        String infoText = "";
+                        String logoRef = "";
+                        try {
+                                TournamentInfo info = new TournamentInfo();
+                                Team t = info.getTeam(displayName);
+                                logoRef = t.getLogoRef();
+                                //by Tyler - added the last two pieces of info to the pop up window
+                                infoText += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
+                                        + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
+                                        + "\nAverage Offensive PPG: " + t.getOffensePPG()
+                                        + "\nAverage Defensive PPG: " + t.getDefensePPG();
+                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
+                                // will display info not found
+                                infoText += "Info for " + displayName + "not found";
+                        }
+                        Tooltip tooltip = new Tooltip();
+                        tooltip.setText(infoText);
+                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
                 }
         }
 }
