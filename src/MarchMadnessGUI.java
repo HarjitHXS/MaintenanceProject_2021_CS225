@@ -483,8 +483,8 @@ public class MarchMadnessGUI extends Application {
                         infoAlert("No user with the Username \"" + username + "\" exists. A new account has been created.");
                         chooseBracket();
                     }
-                    else{
-                        infoAlert("Please confirm your password in the confirm password text field.");
+                    else {
+                        infoAlert("The password you entered does not match the password in the password confirmation text field.");
                     }
 
                 }
