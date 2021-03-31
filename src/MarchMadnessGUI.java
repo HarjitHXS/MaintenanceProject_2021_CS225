@@ -223,11 +223,11 @@ public class MarchMadnessGUI extends Application {
      * for final4 reset Ro2 and winner
      */
     private void clear(){
-
-
+        int visible = bracketPane.getDisplayedSubtree();
         bracketPane.clear();
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
+        bracketPane.setVisiblePane(visible - 3);
 
     }
 

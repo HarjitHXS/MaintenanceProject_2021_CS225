@@ -65,6 +65,9 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
+        //The buttons to choose a bracket (East, West, Full etc.)
+        private ArrayList<StackPane> buttons;
+
         /**
          * Clears the entries of a team future wins
          *
@@ -180,7 +183,7 @@ public class BracketPane extends BorderPane {
 
                 center = new GridPane();
 
-                ArrayList<StackPane> buttons = new ArrayList<>();
+                buttons = new ArrayList<>();
                 buttons.add(customButton("EAST"));
                 buttons.add(customButton("WEST"));
                 buttons.add(customButton("MIDWEST"));
@@ -204,7 +207,6 @@ public class BracketPane extends BorderPane {
                 gp2.add(roots.get(2), 0, 0);
                 gp2.add(roots.get(3), 0, 1);
                 gp2.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-
                 fullPane.add(gp1, 0, 0);
                 fullPane.add(finalPane, 1, 0, 1, 2);
                 fullPane.add(gp2, 2, 0);
@@ -221,28 +223,24 @@ public class BracketPane extends BorderPane {
                 // set default center to the button grid
                 this.setCenter(buttonGrid);
 
-                for (StackPane t : buttons) {
-                        t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
-                        t.setOnMouseEntered(mouseEvent -> {
-                                t.setStyle("-fx-background-color: LIGHTGREEN; -fx-font-family: Futura;");
-                                t.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
+                //For all buttons set its functionality
+                for(int i = 0; i < buttons.size(); i++){
+                StackPane button = buttons.get(i);
+                        button.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
+                        button.setOnMouseEntered(mouseEvent -> {
+                                button.setStyle("-fx-background-color: LIGHTGREEN; -fx-font-family: Futura;");
+                                button.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
                         });
-                        t.setOnMouseExited(mouseEvent -> {
-                                t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
-                                t.setEffect(null);
+                        button.setOnMouseExited(mouseEvent -> {
+                                button.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
+                                button.setEffect(null);
                         });
-                        t.setOnMouseClicked(mouseEvent -> {
-                                setCenter(null);
-                                /**
-                                 * @update Grant & Tyler 
-                                 * 			panes are added as ScrollPanes to retain center alignment when moving through full-view and region-view
-                                 */
-                                center.add(new ScrollPane(panes.get(t)), 0, 0);
-                                center.setAlignment(Pos.CENTER);
-                                setCenter(center);
-                                //Grant 5/7 this is for clearing the tree it kind of works 
-                                displayedSubtree=buttons.indexOf(t)==7?0:buttons.indexOf(t)+3;
-                                if(buttons.indexOf(t) == 4) {
+
+                        //What happens when click happens in button
+                        button.setOnMouseClicked(mouseEvent -> {
+                                setVisiblePane(buttons.indexOf(button));
+                                displayedSubtree=buttons.indexOf(button)==7?0:buttons.indexOf(button)+3;
+                                if(buttons.indexOf(button) == 4) {
                                         createTriangle();
                                         MarchMadnessGUI.getButton().setDisable(true);
                                 }
@@ -251,6 +249,20 @@ public class BracketPane extends BorderPane {
 
                         });
                 }
+        }
+
+        /**
+         * Method sets the visible pane on command (Either of the 4 little or the full pane)
+         */
+        public void setVisiblePane(int index){
+                setCenter(null);                         //Center is the grid pane
+                center.add(new ScrollPane(panes.get(buttons.get(index))), 0, 0);
+                center.setAlignment(Pos.CENTER);
+                setCenter(center);
+        }
+
+        public int getDisplayedSubtree() {
+                return displayedSubtree;
         }
 
         /**
