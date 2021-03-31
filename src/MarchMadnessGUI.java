@@ -429,6 +429,13 @@ public class MarchMadnessGUI extends Application {
         PasswordField passwordField = new PasswordField();
         loginPane.add(passwordField, 1, 2);
 
+        Label confirmPassword = new Label("Confirm Password: ");
+        loginPane.add(confirmPassword, 0, 3);
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm Password");
+        loginPane.add(confirmPasswordField, 1, 3);
+
         Button signButton = new Button("Sign in");
         loginPane.add(signButton, 1, 4);
         signButton.setDefaultButton(true);//added by matt 5/7, lets you use sign in button by pressing enter
@@ -443,9 +450,8 @@ public class MarchMadnessGUI extends Application {
             // the password user enter
             String playerPass = passwordField.getText();
 
-        
-          
-            
+
+            //Check to see if user already exists
             if (playerMap.get(username) != null) {
                 //check password of user
                  
@@ -460,20 +466,27 @@ public class MarchMadnessGUI extends Application {
                 }else{
                    infoAlert("The password you have entered is incorrect!");
                 }
-
+            //Create a new user using the information provided
             } else {
                 //check for empty fields
                 if(!username.equals("")&&!playerPass.equals("")){
-                    //create new bracket
-                    Bracket tmpPlayerBracket = new Bracket(startingBracket, username);
-                    playerBrackets.add(tmpPlayerBracket);
-                    tmpPlayerBracket.setPassword(playerPass);
+                    //Only create the new user if the confirm password input field matches the password field
+                    if(playerPass.equals(confirmPasswordField.getText())) {
+                        //create new bracket
+                        Bracket tmpPlayerBracket = new Bracket(startingBracket, username);
+                        playerBrackets.add(tmpPlayerBracket);
+                        tmpPlayerBracket.setPassword(playerPass);
 
-                    playerMap.put(username, tmpPlayerBracket);
-                    selectedBracket = tmpPlayerBracket;
-                    //alert user that an account has been created
-                    infoAlert("No user with the Username \""  + username + "\" exists. A new account has been created.");
-                    chooseBracket();
+                        playerMap.put(username, tmpPlayerBracket);
+                        selectedBracket = tmpPlayerBracket;
+                        //alert user that an account has been created
+                        infoAlert("No user with the Username \"" + username + "\" exists. A new account has been created.");
+                        chooseBracket();
+                    }
+                    else{
+                        infoAlert("Please confirm your password in the confirm password text field.");
+                    }
+
                 }
             }
         });
