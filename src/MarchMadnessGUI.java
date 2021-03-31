@@ -117,6 +117,7 @@ public class MarchMadnessGUI extends Application {
         root.setTop(toolBar);   
         root.setBottom(btoolBar);
         Scene scene = new Scene(root);
+
         primaryStage.setMaximized(true);
 
         primaryStage.setTitle("March Madness Bracket Simulator");
@@ -171,7 +172,7 @@ public class MarchMadnessGUI extends Application {
     }
     private void logout() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(" Logout");
+        alert.setTitle("Logout");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to logout? ");
 
@@ -311,7 +312,7 @@ public class MarchMadnessGUI extends Application {
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
         login=new Button("Login");
-        logout=new Button("logout");
+        logout=new Button("Logout");
         simulate=new Button("Simulate");
         scoreBoardButton=new Button("ScoreBoard");
         viewBracketButton= new Button("View Simulated Bracket");
