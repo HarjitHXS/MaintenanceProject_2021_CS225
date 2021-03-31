@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -404,7 +405,7 @@ public class MarchMadnessGUI extends Application {
         
         /*
         LoginPane
-        Sergio and Joao
+        Modified by Alexander
          */
 
         GridPane loginPane = new GridPane();
@@ -437,24 +438,24 @@ public class MarchMadnessGUI extends Application {
 
         signButton.setOnAction(event -> {
 
-            // the name user enter
-            String name = enterUser.getText();
+            // the username user entered
+            String username = enterUser.getText().toLowerCase();
             // the password user enter
             String playerPass = passwordField.getText();
 
         
           
             
-            if (playerMap.get(name) != null) {
+            if (playerMap.get(username) != null) {
                 //check password of user
                  
-                Bracket tmpBracket = this.playerMap.get(name);
+                Bracket tmpBracket = this.playerMap.get(username);
                
                 String password1 = tmpBracket.getPassword();
 
                 if (Objects.equals(password1, playerPass)) {
                     // load bracket
-                    selectedBracket=playerMap.get(name);
+                    selectedBracket=playerMap.get(username);
                     chooseBracket();
                 }else{
                    infoAlert("The password you have entered is incorrect!");
@@ -462,16 +463,16 @@ public class MarchMadnessGUI extends Application {
 
             } else {
                 //check for empty fields
-                if(!name.equals("")&&!playerPass.equals("")){
+                if(!username.equals("")&&!playerPass.equals("")){
                     //create new bracket
-                    Bracket tmpPlayerBracket = new Bracket(startingBracket, name);
+                    Bracket tmpPlayerBracket = new Bracket(startingBracket, username);
                     playerBrackets.add(tmpPlayerBracket);
                     tmpPlayerBracket.setPassword(playerPass);
 
-                    playerMap.put(name, tmpPlayerBracket);
+                    playerMap.put(username, tmpPlayerBracket);
                     selectedBracket = tmpPlayerBracket;
                     //alert user that an account has been created
-                    infoAlert("No user with the Username \""  + name + "\" exists. A new account has been created.");
+                    infoAlert("No user with the Username \""  + username + "\" exists. A new account has been created.");
                     chooseBracket();
                 }
             }
