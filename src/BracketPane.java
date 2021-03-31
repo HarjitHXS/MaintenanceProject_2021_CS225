@@ -65,7 +65,6 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
-
         /**
          * Clears the entries of a team future wins
          *
@@ -496,8 +495,7 @@ public class BracketPane extends BorderPane {
                         name.setTranslateX(5);
                         name.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
                         getChildren().addAll(name, rect);
-                        //setToolTip();
-
+                        name.setTooltip(new Tooltip("hover!"));
                 }
 
                 /**
@@ -515,7 +513,7 @@ public class BracketPane extends BorderPane {
                         name.setText(displayName);
                 }
 
-                private void setToolTip() {
+                private void setUpToolTip() {
                         String infoText = "";
                         String logoRef = "";
                         try {

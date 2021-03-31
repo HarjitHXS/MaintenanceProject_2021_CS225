@@ -14,16 +14,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -45,8 +37,8 @@ import javax.swing.*;
  * @author Grant Osborn
  */
 public class MarchMadnessGUI extends Application {
-    
-    
+
+
     //all the gui ellements
     private BorderPane root;
     private ToolBar toolBar;
@@ -63,29 +55,29 @@ public class MarchMadnessGUI extends Application {
     private Button quit;
     private Button viewMine;
     private  Image img1;
-    
+
     //allows you to navigate back to division selection screen
     private Button back;
-  
-    
+
+
     private  Bracket startingBracket;
     //reference to currently logged in bracket
     private Bracket selectedBracket;
     private Bracket simResultBracket;
 
-    
+
     private ArrayList<Bracket> playerBrackets;
     private HashMap<String, Bracket> playerMap;
 
-    
+
 
     private ScoreBoardTable scoreBoard;
     private TableView table;
     private BracketPane bracketPane;
     private GridPane loginP;
     private TournamentInfo teamInfo;
-    
-    
+
+
     @Override
     public void start(Stage primaryStage) {
         //try to load all the files, if there is an error display it
@@ -101,7 +93,7 @@ public class MarchMadnessGUI extends Application {
 
         playerMap = new HashMap<>();
         addAllToMap();
-        
+
 
 
         //the main layout container
@@ -110,12 +102,12 @@ public class MarchMadnessGUI extends Application {
         table=scoreBoard.start();
         loginP=createLogin();
         CreateToolBars();
-        
+
         //display login screen
         login();
-        
+
         setActions();
-        root.setTop(toolBar);   
+        root.setTop(toolBar);
         root.setBottom(btoolBar);
         Scene scene = new Scene(root);
         primaryStage.setMaximized(true);
@@ -131,9 +123,9 @@ public class MarchMadnessGUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-    
-    
+
+
+
     /**
      * simulates the tournament  
      * simulation happens only once and
@@ -144,25 +136,25 @@ public class MarchMadnessGUI extends Application {
         login.setDisable(true);
         simulate.setDisable(true);
         logout.setDisable(false);
-        
-       scoreBoardButton.setDisable(false);
-       viewBracketButton.setDisable(false);
-       viewMine.setDisable(false);
 
-       
-       teamInfo.simulate(simResultBracket);
-       for(Bracket b:playerBrackets){
-           scoreBoard.addPlayer(b,b.scoreBracket(simResultBracket));
-       }
-        
+        scoreBoardButton.setDisable(false);
+        viewBracketButton.setDisable(false);
+        viewMine.setDisable(false);
+
+
+        teamInfo.simulate(simResultBracket);
+        for(Bracket b:playerBrackets){
+            scoreBoard.addPlayer(b,b.scoreBracket(simResultBracket));
+        }
+
         displayPane(table);
     }
-    
+
     /**
      * Displays the login screen
-     * 
+     *
      */
-    private void login(){            
+    private void login(){
         login.setDisable(true);
         logout.setDisable(true);
         simulate.setDisable(true);
@@ -191,10 +183,10 @@ public class MarchMadnessGUI extends Application {
         btoolBar.setDisable(true);
         displayPane(loginP);
     }
-    
-     /**
+
+    /**
      * Displays the score board
-     * 
+     *
      */
     private void scoreBoard(){
         displayPane(table);
@@ -211,15 +203,15 @@ public class MarchMadnessGUI extends Application {
         full.setDisable(true);
         displayPane(new ScrollPane(full));;
     }
-    
+
     /**
      * allows user to choose bracket
-     * 
+     *
      */
-   private void chooseBracket(){
+    private void chooseBracket(){
         //login.setDisable(true);
         btoolBar.setDisable(false);
-       logout.setDisable(false);
+        logout.setDisable(false);
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
 
@@ -229,14 +221,14 @@ public class MarchMadnessGUI extends Application {
      * for final4 reset Ro2 and winner
      */
     private void clear(){
-      
-      
-      bracketPane.clear();
-      bracketPane=new BracketPane(selectedBracket);
-      displayPane(bracketPane);
-        
+
+
+        bracketPane.clear();
+        bracketPane=new BracketPane(selectedBracket);
+        displayPane(bracketPane);
+
     }
-    
+
     /**
      * resets entire bracket
      */
@@ -256,7 +248,7 @@ public class MarchMadnessGUI extends Application {
         alert.setContentText("User can select each bracket and choose the team " + "\n"
                 + "\n" + " click clear to undo the last change "+ "\n" +
                 "\n"+" click on reset to reset all the brackets "+
-                        "\n"+" click finalize to submit the brackets ");
+                "\n"+" click finalize to submit the brackets ");
 
         alert.showAndWait();
     }
@@ -273,32 +265,32 @@ public class MarchMadnessGUI extends Application {
     }
 
     private void finalizeBracket(){
-       if(bracketPane.isComplete()){
-           btoolBar.setDisable(true);
-           bracketPane.setDisable(true);
-           logout.setDisable(false);
-           simulate.setDisable(false);
-           login.setDisable(false);
-           //save the bracket along with account info
-           seralizeBracket(selectedBracket);
-            
-       }else{
+        if(bracketPane.isComplete()){
+            btoolBar.setDisable(true);
+            bracketPane.setDisable(true);
+            logout.setDisable(false);
+            simulate.setDisable(false);
+            login.setDisable(false);
+            //save the bracket along with account info
+            seralizeBracket(selectedBracket);
+
+        }else{
             infoAlert("You can only finalize a bracket once it has been completed.");
             //go back to bracket section selection screen
             // bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
-        
-       }
-       //bracketPane=new BracketPane(selectedBracket);
-      
-      
-        
+
+        }
+        //bracketPane=new BracketPane(selectedBracket);
+
+
+
     }
-    
-    
+
+
     /**
      * displays element in the center of the screen
-     * 
+     *
      * @param p must use a subclass of Pane for layout. 
      * to be properly center aligned in  the parent node
      */
@@ -306,7 +298,7 @@ public class MarchMadnessGUI extends Application {
         root.setCenter(p);
         BorderPane.setAlignment(p,Pos.CENTER);
     }
-    
+
     /**
      * Creates toolBar and buttons.
      * adds buttons to the toolbar and saves global references to them
@@ -348,10 +340,10 @@ public class MarchMadnessGUI extends Application {
                 quit
         );
     }
-    
-   /**
-    * sets the actions for each button
-    */
+
+    /**
+     * sets the actions for each button
+     */
     private void setActions(){
         login.setOnAction(e->login());
         logout.setOnAction(e->logout());
@@ -388,7 +380,7 @@ public class MarchMadnessGUI extends Application {
     public static Button getButton(){
         return clearButton;
     }
-    
+
     /**
      * Creates a spacer for centering buttons in a ToolBar
      */
@@ -397,14 +389,14 @@ public class MarchMadnessGUI extends Application {
         HBox.setHgrow(spacer,Priority.SOMETIMES);
         return spacer;
     }
-    
-    
+
+
     private GridPane createLogin(){
-        
-        
+
+
         /*
         LoginPane
-        Sergio and Joao
+        Modified by Alexander
          */
 
         GridPane loginPane = new GridPane();
@@ -428,6 +420,13 @@ public class MarchMadnessGUI extends Application {
         PasswordField passwordField = new PasswordField();
         loginPane.add(passwordField, 1, 2);
 
+        Label confirmPassword = new Label("Confirm Password: ");
+        loginPane.add(confirmPassword, 0, 3);
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm Password");
+        loginPane.add(confirmPasswordField, 1, 3);
+
         Button signButton = new Button("Sign in");
         loginPane.add(signButton, 1, 4);
         signButton.setDefaultButton(true);//added by matt 5/7, lets you use sign in button by pressing enter
@@ -437,59 +436,65 @@ public class MarchMadnessGUI extends Application {
 
         signButton.setOnAction(event -> {
 
-            // the name user enter
-            String name = enterUser.getText();
+            // the username user entered
+            String username = enterUser.getText().toLowerCase();
             // the password user enter
             String playerPass = passwordField.getText();
 
-        
-          
-            
-            if (playerMap.get(name) != null) {
+
+            //Check to see if user already exists
+            if (playerMap.get(username) != null) {
                 //check password of user
-                 
-                Bracket tmpBracket = this.playerMap.get(name);
-               
+
+                Bracket tmpBracket = this.playerMap.get(username);
+
                 String password1 = tmpBracket.getPassword();
 
                 if (Objects.equals(password1, playerPass)) {
                     // load bracket
-                    selectedBracket=playerMap.get(name);
+                    selectedBracket=playerMap.get(username);
                     chooseBracket();
                 }else{
-                   infoAlert("The password you have entered is incorrect!");
+                    infoAlert("The password you have entered is incorrect!");
                 }
-
+                //Create a new user using the information provided
             } else {
                 //check for empty fields
-                if(!name.equals("")&&!playerPass.equals("")){
-                    //create new bracket
-                    Bracket tmpPlayerBracket = new Bracket(startingBracket, name);
-                    playerBrackets.add(tmpPlayerBracket);
-                    tmpPlayerBracket.setPassword(playerPass);
+                if(!username.equals("")&&!playerPass.equals("")){
+                    //Only create the new user if the confirm password input field matches the password field
+                    if(playerPass.equals(confirmPasswordField.getText())) {
+                        //create new bracket
+                        Bracket tmpPlayerBracket = new Bracket(startingBracket, username);
+                        playerBrackets.add(tmpPlayerBracket);
+                        tmpPlayerBracket.setPassword(playerPass);
 
-                    playerMap.put(name, tmpPlayerBracket);
-                    selectedBracket = tmpPlayerBracket;
-                    //alert user that an account has been created
-                    infoAlert("No user with the Username \""  + name + "\" exists. A new account has been created.");
-                    chooseBracket();
+                        playerMap.put(username, tmpPlayerBracket);
+                        selectedBracket = tmpPlayerBracket;
+                        //alert user that an account has been created
+                        infoAlert("No user with the Username \"" + username + "\" exists. A new account has been created.");
+                        chooseBracket();
+                    }
+                    else{
+                        infoAlert("Please confirm your password in the confirm password text field.");
+                    }
+
                 }
             }
         });
-        
+
         return loginPane;
     }
-    
+
     /**
      * addAllToMap
      * adds all the brackets to the map for login
      */
     private void addAllToMap(){
         for(Bracket b:playerBrackets){
-            playerMap.put(b.getPlayerName(), b);   
+            playerMap.put(b.getPlayerName(), b);
         }
     }
-    
+
     /**
      * The Exception handler
      * Displays a error message to the user
@@ -504,17 +509,17 @@ public class MarchMadnessGUI extends Application {
         }
         Alert alert = new Alert(AlertType.ERROR,msg);
         alert.setResizable(true);
-        alert.getDialogPane().setMinWidth(420);   
+        alert.getDialogPane().setMinWidth(420);
         alert.setTitle("Error");
         alert.setHeaderText("something went wrong");
         alert.showAndWait();
-        if(fatal){ 
+        if(fatal){
             System.exit(666);
-        }   
+        }
     }
-    
+
     /**
-     * alerts user to the result of their actions in the login pane 
+     * alerts user to the result of their actions in the login pane
      * @param msg the message to be displayed to the user
      */
     private void infoAlert(String msg){
@@ -524,23 +529,23 @@ public class MarchMadnessGUI extends Application {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-    
+
     /**
      * Prompts the user to confirm that they want
      * to clear all predictions from their bracket
      * @return true if the yes button clicked, false otherwise
      */
     private boolean confirmReset(){
-        Alert alert = new Alert(AlertType.CONFIRMATION, 
-                "Are you sure you want to reset the ENTIRE bracket?", 
+        Alert alert = new Alert(AlertType.CONFIRMATION,
+                "Are you sure you want to reset the ENTIRE bracket?",
                 ButtonType.YES,  ButtonType.CANCEL);
         alert.setTitle("March Madness Bracket Simulator");
         alert.setHeaderText(null);
         alert.showAndWait();
         return alert.getResult()==ButtonType.YES;
     }
-    
-    
+
+
     /**
      * Tayon Watson 5/5
      * seralizedBracket
@@ -549,60 +554,60 @@ public class MarchMadnessGUI extends Application {
     private void seralizeBracket(Bracket B){
         FileOutputStream outStream = null;
         ObjectOutputStream out = null;
-    try 
-    {
-      outStream = new FileOutputStream(B.getPlayerName()+".ser");
-      out = new ObjectOutputStream(outStream);
-      out.writeObject(B);
-      out.close();
-    } 
-    catch(IOException e)
-    {
-      // Grant osborn 5/6 hopefully this never happens 
-      showError(new Exception("Error saving bracket \n"+e.getMessage(),e),false);
-    }
+        try
+        {
+            outStream = new FileOutputStream(B.getPlayerName()+".ser");
+            out = new ObjectOutputStream(outStream);
+            out.writeObject(B);
+            out.close();
+        }
+        catch(IOException e)
+        {
+            // Grant osborn 5/6 hopefully this never happens
+            showError(new Exception("Error saving bracket \n"+e.getMessage(),e),false);
+        }
     }
     /**
      * Tayon Watson 5/5
      * deseralizedBracket
      * @param filename of the seralized bracket file
-     * @return deserialized bracket 
+     * @return deserialized bracket
      */
     private Bracket deseralizeBracket(String filename){
         Bracket bracket = null;
         FileInputStream inStream = null;
         ObjectInputStream in = null;
-    try 
-    {
-        inStream = new FileInputStream(filename);
-        in = new ObjectInputStream(inStream);
-        bracket = (Bracket) in.readObject();
-        in.close();
-    }catch (IOException | ClassNotFoundException e) {
-      // Grant osborn 5/6 hopefully this never happens either
-      showError(new Exception("Error loading bracket \n"+e.getMessage(),e),false);
-    } 
-    return bracket;
+        try
+        {
+            inStream = new FileInputStream(filename);
+            in = new ObjectInputStream(inStream);
+            bracket = (Bracket) in.readObject();
+            in.close();
+        }catch (IOException | ClassNotFoundException e) {
+            // Grant osborn 5/6 hopefully this never happens either
+            showError(new Exception("Error loading bracket \n"+e.getMessage(),e),false);
+        }
+        return bracket;
     }
-    
-      /**
+
+    /**
      * Tayon Watson 5/5
      * deseralizedBracket
      * @return deserialized bracket
      */
     private ArrayList<Bracket> loadBrackets()
-    {   
+    {
         ArrayList<Bracket> list=new ArrayList<Bracket>();
         File dir = new File(".");
         for (final File fileEntry : dir.listFiles()){
             String fileName = fileEntry.getName();
             String extension = fileName.substring(fileName.lastIndexOf(".")+1);
-       
+
             if (extension.equals("ser")){
                 list.add(deseralizeBracket(fileName));
             }
         }
         return list;
     }
-       
+
 }
