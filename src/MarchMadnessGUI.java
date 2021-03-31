@@ -46,7 +46,6 @@ public class MarchMadnessGUI extends Application {
     private ToolBar toolBar;
     private ToolBar btoolBar;
     private Button simulate;
-    private Button login;
     private Button logout;
     private Button scoreBoardButton;
     private Button viewBracketButton;
@@ -136,7 +135,6 @@ public class MarchMadnessGUI extends Application {
      */
     private void simulate(){
         //cant login and restart prog after simulate
-        login.setDisable(true);
         simulate.setDisable(true);
         logout.setDisable(false);
 
@@ -158,7 +156,6 @@ public class MarchMadnessGUI extends Application {
      *
      */
     private void login(){
-        login.setDisable(true);
         logout.setDisable(true);
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
@@ -176,7 +173,6 @@ public class MarchMadnessGUI extends Application {
 
         alert.showAndWait();
 
-        login.setDisable(true);
         logout.setDisable(true);
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
@@ -224,11 +220,11 @@ public class MarchMadnessGUI extends Application {
      * for final4 reset Ro2 and winner
      */
     private void clear(){
-        int visible = bracketPane.getDisplayedSubtree();
+        int visible = bracketPane.getDisplayedSubtree() - 3;
         bracketPane.clear();
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
-        bracketPane.setVisiblePane(visible - 3);
+        bracketPane.setVisiblePane(visible);
 
     }
 
@@ -278,7 +274,6 @@ public class MarchMadnessGUI extends Application {
             bracketPane.setDisable(true);
             logout.setDisable(false);
             simulate.setDisable(false);
-            login.setDisable(false);
             //save the bracket along with account info
             seralizeBracket(selectedBracket);
 
@@ -314,7 +309,6 @@ public class MarchMadnessGUI extends Application {
     private void CreateToolBars(){
         toolBar  = new ToolBar();
         btoolBar  = new ToolBar();
-        login=new Button("Login");
         logout=new Button("Logout");
         simulate=new Button("Simulate");
         scoreBoardButton=new Button("ScoreBoard");
@@ -329,7 +323,6 @@ public class MarchMadnessGUI extends Application {
         quit =new Button("Quit");
         toolBar.getItems().addAll(
                 createSpacer(),
-                login,
                 logout,
                 simulate,
                 scoreBoardButton,
@@ -353,7 +346,6 @@ public class MarchMadnessGUI extends Application {
      * sets the actions for each button
      */
     private void setActions(){
-        login.setOnAction(e->login());
         logout.setOnAction(e->logout());
         simulate.setOnAction(e->simulate());
         scoreBoardButton.setOnAction(e->scoreBoard());
