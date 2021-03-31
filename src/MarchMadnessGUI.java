@@ -164,11 +164,11 @@ public class MarchMadnessGUI extends Application {
      */
     private void login(){            
         login.setDisable(true);
+        logout.setDisable(true);
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
         viewMine.setDisable(true);
-        logout.setDisable(true);
         btoolBar.setDisable(true);
         displayPane(loginP);
     }
@@ -181,11 +181,11 @@ public class MarchMadnessGUI extends Application {
         alert.showAndWait();
 
         login.setDisable(true);
+        logout.setDisable(true);
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
         viewMine.setDisable(true);
-        logout.setDisable(true);
         btoolBar.setDisable(true);
         displayPane(loginP);
     }
@@ -328,11 +328,11 @@ public class MarchMadnessGUI extends Application {
         toolBar.getItems().addAll(
                 createSpacer(),
                 login,
+                logout,
                 simulate,
                 scoreBoardButton,
                 viewBracketButton,
                 viewMine,
-                logout,
                 createSpacer(),
                 help
         );

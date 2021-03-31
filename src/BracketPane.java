@@ -255,14 +255,14 @@ public class BracketPane extends BorderPane {
                         center, 200.0,
                         center + 250, 8.0,
                         center - 250, 8.0});
-                triangle.setFill(Color.DARKBLUE);
-                triangle.setStroke(Color.LIGHTBLUE);
+                triangle.setFill(Color.rgb(24, 40, 74));
+                triangle.setStroke(Color.LIGHTGREEN);
                 triangle.setStrokeWidth(10);
                 Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
-                Font font = new Font(25);
+                Font font = new Font("Futura", 25);
                 text.setFill(Color.WHITE);
                 text.setFont(font);
-                text.setX(center - 200);
+                text.setX(center - 240);
                 text.setY(50);
                 getChildren().addAll(triangle, text);
         }
