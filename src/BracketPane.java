@@ -243,8 +243,13 @@ public class BracketPane extends BorderPane {
                                 setCenter(center);
                                 //Grant 5/7 this is for clearing the tree it kind of works 
                                 displayedSubtree=buttons.indexOf(t)==7?0:buttons.indexOf(t)+3;
-                                if(buttons.indexOf(t) == 4)
+                                if(buttons.indexOf(t) == 4) {
                                         createTriangle();
+                                        MarchMadnessGUI.getButton().setDisable(true);
+                                }
+                                else
+                                        MarchMadnessGUI.getButton().setDisable(false);
+
                         });
                 }
         }

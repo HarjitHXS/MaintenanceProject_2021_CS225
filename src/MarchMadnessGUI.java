@@ -56,7 +56,7 @@ public class MarchMadnessGUI extends Application {
     private Button logout;
     private Button scoreBoardButton;
     private Button viewBracketButton;
-    private Button clearButton;
+    private static Button clearButton;
     private Button resetButton;
     private Button finalizeButton;
     private Button help;
@@ -170,6 +170,7 @@ public class MarchMadnessGUI extends Application {
         viewBracketButton.setDisable(true);
         viewMine.setDisable(true);
         btoolBar.setDisable(true);
+        clearButton.setDisable(true);
         displayPane(loginP);
     }
     private void logout() {
@@ -186,6 +187,7 @@ public class MarchMadnessGUI extends Application {
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
         viewMine.setDisable(true);
+        clearButton.setDisable(true);
         btoolBar.setDisable(true);
         displayPane(loginP);
     }
@@ -377,6 +379,14 @@ public class MarchMadnessGUI extends Application {
         full.setAlignment(Pos.CENTER);
         full.setDisable(true);
         displayPane(new ScrollPane(full));
+    }
+
+    /**
+     * Gets clear button so that bracket pane can enable or disable the clear button depending on what
+     * section the user chooses.
+     */
+    public static Button getButton(){
+        return clearButton;
     }
     
     /**
