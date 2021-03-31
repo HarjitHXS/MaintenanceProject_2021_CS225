@@ -236,7 +236,6 @@ public class BracketPane extends BorderPane {
                                         createTriangle();
                         });
                 }
-
         }
 
         /**

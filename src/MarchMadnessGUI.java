@@ -61,6 +61,7 @@ public class MarchMadnessGUI extends Application {
     private Button finalizeButton;
     private Button help;
     private Button quit;
+    private Button viewMine;
     private  Image img1;
     
     //allows you to navigate back to division selection screen
@@ -146,6 +147,7 @@ public class MarchMadnessGUI extends Application {
         
        scoreBoardButton.setDisable(false);
        viewBracketButton.setDisable(false);
+       viewMine.setDisable(false);
 
        
        teamInfo.simulate(simResultBracket);
@@ -165,6 +167,7 @@ public class MarchMadnessGUI extends Application {
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
+        viewMine.setDisable(true);
         logout.setDisable(true);
         btoolBar.setDisable(true);
         displayPane(loginP);
@@ -181,6 +184,7 @@ public class MarchMadnessGUI extends Application {
         simulate.setDisable(true);
         scoreBoardButton.setDisable(true);
         viewBracketButton.setDisable(true);
+        viewMine.setDisable(true);
         logout.setDisable(true);
         btoolBar.setDisable(true);
         displayPane(loginP);
@@ -193,19 +197,17 @@ public class MarchMadnessGUI extends Application {
     private void scoreBoard(){
         displayPane(table);
     }
-    
-     /**
-      * Displays Simulated Bracket
-      * 
-      */
-    private void viewBracket(){
-       selectedBracket=simResultBracket;
-       bracketPane=new BracketPane(selectedBracket);
-       GridPane full = bracketPane.getFullPane();
-       full.setAlignment(Pos.CENTER);
-       full.setDisable(true);
-       displayPane(new ScrollPane(full));
 
+    /**
+     * Displays Simulated Bracket
+     *
+     */
+    private void viewBracket(){
+        bracketPane=new BracketPane(simResultBracket);
+        GridPane full = bracketPane.getFullPane();
+        full.setAlignment(Pos.CENTER);
+        full.setDisable(true);
+        displayPane(new ScrollPane(full));;
     }
     
     /**
@@ -315,6 +317,7 @@ public class MarchMadnessGUI extends Application {
         simulate=new Button("Simulate");
         scoreBoardButton=new Button("ScoreBoard");
         viewBracketButton= new Button("View Simulated Bracket");
+        viewMine= new Button("View My Bracket");
         clearButton=new Button("Clear");
         resetButton=new Button("Reset");
         finalizeButton=new Button("Finalize");
@@ -328,6 +331,7 @@ public class MarchMadnessGUI extends Application {
                 simulate,
                 scoreBoardButton,
                 viewBracketButton,
+                viewMine,
                 logout,
                 createSpacer(),
                 help
@@ -351,6 +355,7 @@ public class MarchMadnessGUI extends Application {
         logout.setOnAction(e->logout());
         simulate.setOnAction(e->simulate());
         scoreBoardButton.setOnAction(e->scoreBoard());
+        viewMine.setOnAction(e -> viewMine());
         viewBracketButton.setOnAction(e->viewBracket());
         clearButton.setOnAction(e->clear());
         resetButton.setOnAction(e->reset());
@@ -361,6 +366,17 @@ public class MarchMadnessGUI extends Application {
             bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
         });
+    }
+
+    /**
+     * Method to allow user to see his/her prediction of the tournament and not only the results
+     */
+    private void viewMine(){
+        bracketPane = new BracketPane(selectedBracket);
+        GridPane full = bracketPane.getFullPane();
+        full.setAlignment(Pos.CENTER);
+        full.setDisable(true);
+        displayPane(new ScrollPane(full));
     }
     
     /**
