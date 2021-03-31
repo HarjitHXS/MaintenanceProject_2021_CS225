@@ -366,6 +366,7 @@ public class MarchMadnessGUI extends Application {
         back.setOnAction(e->{
             bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
+            clearButton.setDisable(true);
         });
     }
 
