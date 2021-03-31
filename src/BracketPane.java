@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 
 /**
  * Created by Richard and Ricardo on 5/3/17.
@@ -230,9 +232,34 @@ public class BracketPane extends BorderPane {
                                 setCenter(center);
                                 //Grant 5/7 this is for clearing the tree it kind of works 
                                 displayedSubtree=buttons.indexOf(t)==7?0:buttons.indexOf(t)+3;
+                                if(buttons.indexOf(t) == 4)
+                                        createTriangle();
                         });
                 }
 
+        }
+
+        /**
+         * Method to add a triangle in the screen
+         * Triangle appears when FULL bracket is visible only. It is centered to the screen.
+         */
+        private void createTriangle() {
+                Polygon triangle = new Polygon();
+                double center = getWidth() / 2.0;
+                triangle.getPoints().addAll(new Double[]{
+                        center, 200.0,
+                        center + 250, 8.0,
+                        center - 250, 8.0});
+                triangle.setFill(Color.DARKBLUE);
+                triangle.setStroke(Color.LIGHTBLUE);
+                triangle.setStrokeWidth(10);
+                Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
+                Font font = new Font(25);
+                text.setFill(Color.WHITE);
+                text.setFont(font);
+                text.setX(center - 200);
+                text.setY(50);
+                getChildren().addAll(triangle, text);
         }
 
         /**
