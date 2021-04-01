@@ -196,9 +196,9 @@ public class BracketPane extends BorderPane {
                 buttons.add(customButton("FULL"));
 
                 ArrayList<GridPane> gridPanes = new ArrayList<>();
-
+                String[] divisionNames = {"EAST", "WEST", "MIDWEST", "SOUTH", ""};
                 for (int m = 0; m < buttons.size() - 1; m++) {
-                        roots.add(new Root(3 + m));
+                        roots.add(new Root(3 + m, divisionNames[m]));
                         panes.put(buttons.get(m), roots.get(m));
                 }
                 Pane finalPane = createFinalFour();
@@ -480,7 +480,7 @@ public class BracketPane extends BorderPane {
 
                 private int location;
 
-                public Root(int location) {
+                public Root(int location, String divisionName) {
                         this.location = location;
                         createVertices(420, 200, 100, 20, 0, 0);
                         createVertices(320, 119, 100, 200, 1, 0);
@@ -492,6 +492,12 @@ public class BracketPane extends BorderPane {
                                 n.setOnMouseEntered(enter);
                                 n.setOnMouseExited(exit);
                         }
+                        Label division = new Label(divisionName);
+                        division.setLayoutX(350);
+                        division.setLayoutY(190);
+                        division.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
+                        division.setFont(new Font(20));
+                        getChildren().add(division);
                 }
 
                 /**
