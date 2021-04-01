@@ -495,7 +495,7 @@ public class BracketPane extends BorderPane {
                         Label division = new Label(divisionName);
                         division.setLayoutX(350);
                         division.setLayoutY(190);
-                        division.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
+                        division.setStyle("-fx-font: 20px futura; -fx-text-fill: #16284f");
                         division.setFont(new Font(20));
                         getChildren().add(division);
                 }
