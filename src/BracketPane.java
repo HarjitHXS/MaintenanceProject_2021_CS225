@@ -300,36 +300,30 @@ public class BracketPane extends BorderPane {
          * Method to add a triangle in the screen
          * Triangle appears when FULL bracket is visible only. It is centered to the screen.
          */
-        private void addTriangle(Pane finalPane) {
-                Polygon triangle1 = new Polygon();
-                Polygon triangle2 = new Polygon();
-                triangle1.getPoints().addAll(new Double[]{
-                        finalPane.getMinWidth()/ 2.0, 150.0,
-                        finalPane.getMinWidth(), 0.0,
-                        0.0, 0.0}
-                        );
-                triangle1.setFill(Color.LIGHTGREEN);
-                triangle2.getPoints().addAll(new Double[]{
-                        finalPane.getMinWidth()/ 2.0, 140.0,
-                        finalPane.getMinWidth() - 10.0, 0.0,
-                        10.0, 0.0}
-                );
-                triangle2.setFill(Color.rgb(24, 40, 74));
-                finalPane.getChildren().add(triangle1);
-                finalPane.getChildren().add(triangle2);
 
-                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");
-                Label label2 = new Label("\n\n\nBRACKET");
-                String style = " -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15;";
-                label1.setStyle(style);
-                label2.setStyle(style);
-                label1.setMinWidth(finalPane.getMinWidth());
-                label2.setMinWidth(finalPane.getMinWidth());
-                finalPane.getChildren().add(label1);
-                finalPane.getChildren().add(label2);
-                label1.setAlignment(Pos.TOP_CENTER);
-                label2.setAlignment(Pos.TOP_CENTER);
+        private StackPane createTriangle(Pane finalPane) {
+                StackPane s = new StackPane();
+                double center = 200.0;
+                Polygon triangle = new Polygon();
+                triangle.getPoints().addAll(new Double[]{
+                        center, 150.0,
+                        400.0, 8.0,
+                        0.0, 8.0}
+                        );
+                System.out.println(finalPane.getWidth() + "\n" + finalPane.getMaxWidth());
+                triangle.setFill(Color.rgb(24, 40, 74));
+                triangle.setStroke(Color.LIGHTGREEN);
+                triangle.setStrokeWidth(10);
+                Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
+                Font font = new Font("Futura", 12);
+                text.setFill(Color.WHITE);
+                text.setFont(font);
+                text.setTranslateX(-10);
+                s.getChildren().addAll(triangle,text);
+                return s;
         }
+
+
 
         /**
          * Helpful method to retrieve our magical numbers
@@ -428,7 +422,11 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
-                addTriangle(finalPane);
+
+                finalPane.getChildren().add(createTriangle(finalPane));
+                finalPane.setStyle(" -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15" +
+                        "; -fx-alignment:center");
+
 
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
