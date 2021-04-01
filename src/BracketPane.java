@@ -241,7 +241,7 @@ public class BracketPane extends BorderPane {
                                 setVisiblePane(buttons.indexOf(button));
                                 displayedSubtree=buttons.indexOf(button)==7?0:buttons.indexOf(button)+3;
                                 if(buttons.indexOf(button) == 4) {
-                                        createTriangle();
+                                        //createTriangle();
                                         MarchMadnessGUI.getButton().setDisable(true);
                                 }
                                 else
@@ -269,23 +269,30 @@ public class BracketPane extends BorderPane {
          * Method to add a triangle in the screen
          * Triangle appears when FULL bracket is visible only. It is centered to the screen.
          */
-        private void createTriangle() {
+        private Polygon createTriangle() {
+                double center = 200;
                 Polygon triangle = new Polygon();
-                double center = getWidth() / 2.0;
                 triangle.getPoints().addAll(new Double[]{
-                        center, 200.0,
-                        center + 250, 8.0,
-                        center - 250, 8.0});
+                        center, 150.0,
+                        center + 170, 8.0,
+                        center - 170, 8.0}
+                        );
                 triangle.setFill(Color.rgb(24, 40, 74));
                 triangle.setStroke(Color.LIGHTGREEN);
                 triangle.setStrokeWidth(10);
+                getChildren().addAll(triangle);
+                return triangle;
+        }
+
+        private Text createText(){
                 Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
-                Font font = new Font("Futura", 25);
+                Font font = new Font("Futura", 15);
                 text.setFill(Color.WHITE);
                 text.setFont(font);
-                text.setX(center - 240);
+                text.setX(90);
                 text.setY(50);
-                getChildren().addAll(triangle, text);
+                getChildren().add(text);
+                return text;
         }
 
         /**
@@ -384,6 +391,9 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
+                finalPane.getChildren().add(createTriangle());
+                finalPane.getChildren().add(createText());
+
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
                 bracketMap.put(nodeFinal0, 0);
