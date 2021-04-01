@@ -52,7 +52,8 @@ public class BracketPane extends BorderPane {
         /**
          * Reference to active subtree within current bracket.
          */
-        private int displayedSubtree;
+        //Samuel Hernandez: Made static to keep reference value when resetting Bracket Panes
+        private static int displayedSubtree;
         /**
          * Keeps track of whether or not bracket has been finalized.
          */
@@ -177,7 +178,6 @@ public class BracketPane extends BorderPane {
          * Initializes the properties needed to construct a bracket.
          */
         public BracketPane(Bracket currentBracket) {
-                displayedSubtree=0;
                 this.currentBracket = currentBracket;
 
                 bracketMap = new HashMap<>();
