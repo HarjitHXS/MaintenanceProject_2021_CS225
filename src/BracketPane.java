@@ -26,6 +26,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Font;
 
+import javax.swing.text.Style;
+
 /**
  * Created by Richard and Ricardo on 5/3/17.
  */
@@ -271,7 +273,6 @@ public class BracketPane extends BorderPane {
                                 setVisiblePane(buttons.indexOf(button));
                                 displayedSubtree=buttons.indexOf(button)==7?0:buttons.indexOf(button)+3;
                                 if(buttons.indexOf(button) == 4) {
-                                        //createTriangle();
                                         MarchMadnessGUI.getButton().setDisable(true);
                                 }
                                 else
@@ -299,25 +300,35 @@ public class BracketPane extends BorderPane {
          * Method to add a triangle in the screen
          * Triangle appears when FULL bracket is visible only. It is centered to the screen.
          */
-        private Polygon createTriangle(Pane finalPane) {
-                double center = 200.0;
-                Polygon triangle = new Polygon();
-                triangle.getPoints().addAll(new Double[]{
-                        center, 150.0,
-                        400.0, 8.0,
-                        0.0, 8.0}
+        private void addTriangle(Pane finalPane) {
+                Polygon triangle1 = new Polygon();
+                Polygon triangle2 = new Polygon();
+                triangle1.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 150.0,
+                        finalPane.getMinWidth(), 0.0,
+                        0.0, 0.0}
                         );
-                System.out.println(finalPane.getWidth() + "\n" + finalPane.getMaxWidth());
-                triangle.setFill(Color.rgb(24, 40, 74));
-                triangle.setStroke(Color.LIGHTGREEN);
-                triangle.setStrokeWidth(10);
-                getChildren().addAll(triangle);
-                return triangle;
-        }
+                triangle1.setFill(Color.LIGHTGREEN);
+                triangle2.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 140.0,
+                        finalPane.getMinWidth() - 10.0, 0.0,
+                        10.0, 0.0}
+                );
+                triangle2.setFill(Color.rgb(24, 40, 74));
+                finalPane.getChildren().add(triangle1);
+                finalPane.getChildren().add(triangle2);
 
-        private Label createText(){
-                Label label = new Label("\n\n2017 NCAA TOURNAMENT\n\tBracket");
-                return label;
+                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");
+                Label label2 = new Label("\n\n\nBRACKET");
+                String style = " -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15;";
+                label1.setStyle(style);
+                label2.setStyle(style);
+                label1.setMinWidth(finalPane.getMinWidth());
+                label2.setMinWidth(finalPane.getMinWidth());
+                finalPane.getChildren().add(label1);
+                finalPane.getChildren().add(label2);
+                label1.setAlignment(Pos.TOP_CENTER);
+                label2.setAlignment(Pos.TOP_CENTER);
         }
 
         /**
@@ -407,6 +418,7 @@ public class BracketPane extends BorderPane {
 
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
+                finalPane.setMinWidth(400.0);
                 BracketNode nodeFinal0 = new BracketNode("", 162, 300, 70, 0);
                 BracketNode nodeFinal1 = new BracketNode("", 75, 400, 70, 0);
                 BracketNode nodeFinal2 = new BracketNode("", 250, 400, 70, 0);
@@ -416,10 +428,7 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
-                finalPane.getChildren().add(createTriangle(finalPane));
-                finalPane.getChildren().add(createText());
-                finalPane.setStyle(" -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15" +
-                        "; -fx-alignment:center");
+                addTriangle(finalPane);
 
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
@@ -442,8 +451,6 @@ public class BracketPane extends BorderPane {
                 nodeFinal0.setStyle("-fx-border-color: #18284a");
                 nodeFinal1.setStyle("-fx-border-color: #18284a");
                 nodeFinal2.setStyle("-fx-border-color: #18284a");
-                finalPane.setMinWidth(400.0);
-
                 return finalPane;
         }
 
@@ -505,11 +512,9 @@ public class BracketPane extends BorderPane {
                                 }
                                 ArrayList<Integer> tmpHelp = helper(location, num);
                                 for (int j = 0; j < aNodeList.size(); j++) {
-                                        //System.out.println(currentBracket.getBracket().get(tmpHelp.get(j)));
                                         aNodeList.get(j).setName(currentBracket.getBracket().get(tmpHelp.get(j)));
                                         bracketMap.put(aNodeList.get(j), tmpHelp.get(j));
                                         nodeMap.put(tmpHelp.get(j), aNodeList.get(j));
-                                        //System.out.println(bracketMap.get(aNodeList.get(j)));
                                 }
                         }
 
