@@ -223,28 +223,7 @@ public class BracketPane extends BorderPane {
                 topCenterPane = new GridPane();
                 topRightPane = new GridPane();
 
-                topLeftPane.add(new Label("ROUND 1"), 0, 0);
-                topLeftPane.add(new Label("\tROUND 2\t"), 1, 0);
-                topLeftPane.add(new Label("\tSWEET 16\t"), 2, 0);
-                topLeftPane.add(new Label("\tELITE 8\t"), 3, 0);
-                topLeftPane.add(new Label("\tFINAL FOUR\t"), 4, 0);
-                topCenterPane.add(new Label("\tCHAMPIONSHIP\t"), 0, 0);
-                topRightPane.add(new Label("\tFINAL FOUR\t"), 0, 0);
-                topRightPane.add(new Label("\tELITE 8\t"),1,0);
-                topRightPane.add(new Label("\tSWEET 16\t"), 2, 0);
-                topRightPane.add(new Label("\tROUND 2\t"), 3, 0);
-                topRightPane.add(new Label("\tROUND 1\t"), 4, 0);
-
-                fullPane.add(topLeftPane, 0,0);
-                fullPane.add(topCenterPane, 1,0);
-                fullPane.add(topRightPane, 2,0);
-
-                topLeftPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
-                        "-fx-text-fill: #18284a; -fx-alignment:center;");
-                topCenterPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
-                        "-fx-text-fill: #18284a; -fx-alignment:center;");
-                topRightPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
-                        "-fx-text-fill: #18284a; -fx-alignment:center;");
+                createRounds();
 
                 // Initializes the button grid
                 GridPane buttonGrid = new GridPane();
@@ -282,6 +261,42 @@ public class BracketPane extends BorderPane {
                 }
         }
 
+        private void createRounds() {
+                String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
+
+                for (int i = 0; i < roundArr.length; i++) {
+                        Label label = new Label(roundArr[i]);
+                        if (i == 0)
+                                label.setMinWidth(120.0);
+                        else
+                                label.setMinWidth(100.0);
+                        label.setAlignment(Pos.CENTER);
+                        topLeftPane.add(label, i, 0);
+                }
+
+                topCenterPane.add(new Label("CHAMPIONSHIP"), 0, 0);
+                for (int i = 0; i < roundArr.length; i++) {
+                        Label label = new Label(roundArr[roundArr.length - 1 - i]);
+                        label.setTextAlignment(TextAlignment.CENTER);
+                        if (i == roundArr.length - 1)
+                                label.setMinWidth(120.0);
+                        else
+                                label.setMinWidth(100.0);
+                        label.setAlignment(Pos.CENTER);
+                        topRightPane.add(label, i, 0);
+                }
+
+                fullPane.add(topLeftPane, 0,0);
+                fullPane.add(topCenterPane, 1,0);
+                fullPane.add(topRightPane, 2,0);
+
+                String style = " -fx-font-family: Futura; -fx-background-color: lightgreen;" +
+                        "-fx-text-fill: #18284a; -fx-alignment:center;";
+                topLeftPane.setStyle(style);
+                topCenterPane.setStyle(style);
+                topRightPane.setStyle(style);
+        }
+
         /**
          * Method sets the visible pane on command (Either of the 4 little or the full pane)
          */
@@ -302,25 +317,33 @@ public class BracketPane extends BorderPane {
          */
 
         private StackPane createTriangle(Pane finalPane) {
-                StackPane s = new StackPane();
-                double center = 200.0;
-                Polygon triangle = new Polygon();
-                triangle.getPoints().addAll(new Double[]{
-                        center, 150.0,
-                        400.0, 8.0,
-                        0.0, 8.0}
-                        );
-                System.out.println(finalPane.getWidth() + "\n" + finalPane.getMaxWidth());
-                triangle.setFill(Color.rgb(24, 40, 74));
-                triangle.setStroke(Color.LIGHTGREEN);
-                triangle.setStrokeWidth(10);
-                Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
-                Font font = new Font("Futura", 12);
-                text.setFill(Color.WHITE);
-                text.setFont(font);
-                text.setTranslateX(-10);
-                s.getChildren().addAll(triangle,text);
-                return s;
+                StackPane stackPane = new StackPane();
+                Polygon triangle1 = new Polygon();
+                Polygon triangle2 = new Polygon();
+                triangle1.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 150.0,
+                        finalPane.getMinWidth(), 0.0,
+                        0.0, 0.0}
+                );
+                triangle1.setFill(Color.rgb(139, 196, 222));
+                triangle2.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 140.0,
+                        finalPane.getMinWidth() - 10.0, 0.0,
+                        10.0, 0.0}
+                );
+                triangle2.setFill(Color.rgb(24, 40, 74));
+
+                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");
+                Label label2 = new Label("\n\n\nBRACKET");
+                String style = " -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 16;";
+                label1.setStyle(style);
+                label2.setStyle(style);
+                label1.setAlignment(Pos.TOP_CENTER);
+                label2.setAlignment(Pos.TOP_CENTER);
+
+                stackPane.getChildren().addAll(triangle1, triangle2 ,label1, label2);
+                stackPane.setAlignment(Pos.TOP_CENTER);
+                return stackPane;
         }
 
 
@@ -424,9 +447,6 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal2);
 
                 finalPane.getChildren().add(createTriangle(finalPane));
-                finalPane.setStyle(" -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15" +
-                        "; -fx-alignment:center");
-
 
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
