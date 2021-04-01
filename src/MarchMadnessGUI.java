@@ -460,9 +460,12 @@ public class MarchMadnessGUI extends Application {
                 String password1 = tmpBracket.getPassword();
 
                 if (Objects.equals(password1, playerPass)) {
-                    // load bracket
-                    selectedBracket=playerMap.get(username);
-                    chooseBracket();
+                    if(playerPass.equals(confirmPasswordField.getText())) {
+                        selectedBracket = playerMap.get(username);
+                        chooseBracket();
+                    }
+                    else
+                        infoAlert("Password and confirm Password do not match. Please try again");
                 }else{
                    infoAlert("The password you have entered is incorrect!");
                 }
