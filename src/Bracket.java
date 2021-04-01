@@ -39,10 +39,10 @@ public class Bracket implements Serializable //Hillary: This bracket class is to
      * @param starting, master bracket pre-simulation
      */
     public Bracket(Bracket starting){
-        /*bracket = new ArrayList<String>();
+        bracket = new ArrayList<String>();
         for(int i=0; i<127; i++){
             bracket.add(i,starting.getBracket().get(i));
-        }*/
+        }
         //code above removed and replaced by matt 5/1
         bracket = new ArrayList<String>(starting.getBracket());
     }

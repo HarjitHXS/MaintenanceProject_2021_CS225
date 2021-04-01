@@ -14,17 +14,15 @@ import java.util.Optional;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -78,6 +76,7 @@ public class MarchMadnessGUI extends Application {
     private BracketPane bracketPane;
     private GridPane loginP;
     private TournamentInfo teamInfo;
+    private final StackPane firstscene = new StackPane();
 
 
     @Override
@@ -100,21 +99,30 @@ public class MarchMadnessGUI extends Application {
 
         //the main layout container
         root = new BorderPane();
+        Group root1 = new Group();
         scoreBoard= new ScoreBoardTable();
         table=scoreBoard.start();
         loginP=createLogin();
         CreateToolBars();
+        Image img = new Image("basket.jpg");
+        root.setBackground(new Background(new BackgroundImage(img,BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
 
         //display login screen
         login();
 
         setActions();
         root.setTop(toolBar);
+
+        BorderPane.setAlignment(btoolBar, Pos.CENTER);
         root.setBottom(btoolBar);
         Scene scene = new Scene(root);
         primaryStage.setMaximized(true);
 
         primaryStage.setTitle("March Madness Bracket Simulator");
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -401,27 +409,35 @@ public class MarchMadnessGUI extends Application {
          */
 
         GridPane loginPane = new GridPane();
+
+
         loginPane.setAlignment(Pos.CENTER);
         loginPane.setHgap(10);
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(5, 5, 5, 5));
 
         Text welcomeMessage = new Text("March Madness Login Welcome");
+        welcomeMessage.setFill(Color.WHITE);
         loginPane.add(welcomeMessage, 0, 0, 2, 1);
 
         Label userName = new Label("User Name: ");
+        userName.setTextFill(Color.WHITE);
         loginPane.add(userName, 0, 1);
 
         TextField enterUser = new TextField();
+        enterUser.setPromptText("Username");
         loginPane.add(enterUser, 1, 1);
 
         Label password = new Label("Password: ");
+        password.setTextFill(Color.WHITE);
         loginPane.add(password, 0, 2);
 
         PasswordField passwordField = new PasswordField();
+        passwordField.setPromptText("Password");
         loginPane.add(passwordField, 1, 2);
 
         Label confirmPassword = new Label("Confirm Password: ");
+        confirmPassword.setTextFill(Color.WHITE);
         loginPane.add(confirmPassword, 0, 3);
 
         PasswordField confirmPasswordField = new PasswordField();
@@ -434,6 +450,7 @@ public class MarchMadnessGUI extends Application {
 
         Label message = new Label();
         loginPane.add(message, 1, 5);
+
 
         signButton.setOnAction(event -> {
 
