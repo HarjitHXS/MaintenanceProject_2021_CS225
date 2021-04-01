@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -104,12 +105,11 @@ public class MarchMadnessGUI extends Application {
         table=scoreBoard.start();
         loginP=createLogin();
         CreateToolBars();
-        Image img = new Image("basket.jpg");
+        Image img = new Image("ncaa.jpg");
         root.setBackground(new Background(new BackgroundImage(img,BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
-                BackgroundPosition.DEFAULT,
+                BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
-
         //display login screen
         login();
 
@@ -206,7 +206,7 @@ public class MarchMadnessGUI extends Application {
     private void viewBracket(){
         bracketPane=new BracketPane(simResultBracket);
         GridPane full = bracketPane.getFullPane();
-        full.setAlignment(Pos.CENTER);
+        //full.setAlignment(Pos.CENTER);
         full.setDisable(true);
         displayPane(new ScrollPane(full));;
     }

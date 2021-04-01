@@ -165,6 +165,9 @@ public class BracketPane extends BorderPane {
 
         private GridPane center;
         private GridPane fullPane;
+        private GridPane topLeftPane;
+        private GridPane topCenterPane;
+        private GridPane topRightPane;
 
 
         /**
@@ -207,14 +210,41 @@ public class BracketPane extends BorderPane {
                 gp2.add(roots.get(2), 0, 0);
                 gp2.add(roots.get(3), 0, 1);
                 gp2.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-                fullPane.add(gp1, 0, 0);
-                fullPane.add(finalPane, 1, 0, 1, 2);
-                fullPane.add(gp2, 2, 0);
+                fullPane.add(gp1, 0, 1);
+                fullPane.add(finalPane, 1, 1, 1, 2);
+                fullPane.add(gp2, 2, 1);
                 fullPane.setAlignment(Pos.CENTER);
                 panes.put(buttons.get((buttons.size() - 1)), fullPane);
                 finalPane.toBack();
 
-                //  ializes the button grid
+                topLeftPane = new GridPane();
+                topCenterPane = new GridPane();
+                topRightPane = new GridPane();
+
+                topLeftPane.add(new Label("ROUND 1"), 0, 0);
+                topLeftPane.add(new Label("\tROUND 2\t"), 1, 0);
+                topLeftPane.add(new Label("\tSWEET 16\t"), 2, 0);
+                topLeftPane.add(new Label("\tELITE 8\t"), 3, 0);
+                topLeftPane.add(new Label("\tFINAL FOUR\t"), 4, 0);
+                topCenterPane.add(new Label("\tCHAMPIONSHIP\t"), 0, 0);
+                topRightPane.add(new Label("\tFINAL FOUR\t"), 0, 0);
+                topRightPane.add(new Label("\tELITE 8\t"),1,0);
+                topRightPane.add(new Label("\tSWEET 16\t"), 2, 0);
+                topRightPane.add(new Label("\tROUND 2\t"), 3, 0);
+                topRightPane.add(new Label("\tROUND 1\t"), 4, 0);
+
+                fullPane.add(topLeftPane, 0,0);
+                fullPane.add(topCenterPane, 1,0);
+                fullPane.add(topRightPane, 2,0);
+
+                topLeftPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
+                        "-fx-text-fill: #18284a; -fx-alignment:center;");
+                topCenterPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
+                        "-fx-text-fill: #18284a; -fx-alignment:center;");
+                topRightPane.setStyle(" -fx-font-family: Futura; -fx-background-color: lightgreen;" +
+                        "-fx-text-fill: #18284a; -fx-alignment:center;");
+
+                // Initializes the button grid
                 GridPane buttonGrid = new GridPane();
                 for (int i = 0; i < buttons.size(); i++)
                         buttonGrid.add(buttons.get(i), 0, i);
@@ -269,14 +299,15 @@ public class BracketPane extends BorderPane {
          * Method to add a triangle in the screen
          * Triangle appears when FULL bracket is visible only. It is centered to the screen.
          */
-        private Polygon createTriangle() {
-                double center = 200;
+        private Polygon createTriangle(Pane finalPane) {
+                double center = 200.0;
                 Polygon triangle = new Polygon();
                 triangle.getPoints().addAll(new Double[]{
                         center, 150.0,
-                        center + 170, 8.0,
-                        center - 170, 8.0}
+                        400.0, 8.0,
+                        0.0, 8.0}
                         );
+                System.out.println(finalPane.getWidth() + "\n" + finalPane.getMaxWidth());
                 triangle.setFill(Color.rgb(24, 40, 74));
                 triangle.setStroke(Color.LIGHTGREEN);
                 triangle.setStrokeWidth(10);
@@ -284,15 +315,9 @@ public class BracketPane extends BorderPane {
                 return triangle;
         }
 
-        private Text createText(){
-                Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
-                Font font = new Font("Futura", 15);
-                text.setFill(Color.WHITE);
-                text.setFont(font);
-                text.setX(90);
-                text.setY(50);
-                getChildren().add(text);
-                return text;
+        private Label createText(){
+                Label label = new Label("\n\n2017 NCAA TOURNAMENT\n\tBracket");
+                return label;
         }
 
         /**
@@ -391,8 +416,10 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
-                finalPane.getChildren().add(createTriangle());
+                finalPane.getChildren().add(createTriangle(finalPane));
                 finalPane.getChildren().add(createText());
+                finalPane.setStyle(" -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 15" +
+                        "; -fx-alignment:center");
 
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
