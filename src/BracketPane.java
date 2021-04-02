@@ -536,7 +536,7 @@ public class BracketPane extends BorderPane {
                  * @author Samuel Hernandez
                  */
                 private void setTextAndSpace(){
-                        division.setLayoutX(350);
+                        division.setLayoutX(300);
                         division.setLayoutY(190);
                         division.setStyle("-fx-font: 20px futura; -fx-text-fill: #16284f");
                         division.setFont(new Font(20));
