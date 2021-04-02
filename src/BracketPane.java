@@ -258,7 +258,7 @@ public class BracketPane extends BorderPane {
          * Method adds labels to now what round teams are on, when meaking selection in individual sections
          * of the bracket.
          * @param index the section to add the labels to.
-         * @author Samuel Hernandez (Based on Justin Valas' code)
+         * @author Samuel Hernandez (Based on Ariel Liberzon's code)
          */
         public void roundsForDivsions(int index){
                 if(index >= 0 && index < 4) {
@@ -285,6 +285,9 @@ public class BracketPane extends BorderPane {
                 }
         }
 
+        /**
+         * Creates a pane
+         */
         private void createRounds() {
                 String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
 
