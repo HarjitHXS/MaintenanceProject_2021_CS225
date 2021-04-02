@@ -166,7 +166,7 @@ public class MarchMadnessGUI extends Application {
     }
     private void logout() {
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(" Logout");
+        alert.setTitle("Logout");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to logout?");
 

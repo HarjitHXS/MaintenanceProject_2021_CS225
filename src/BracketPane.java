@@ -66,6 +66,8 @@ public class BracketPane extends BorderPane {
         //Samuel Hernandez: Array to have class access to all roots
         private ArrayList<Root> roots;
 
+        private TournamentInfo info;
+
         /**
          * Clears the entries of a team future wins
          *
@@ -107,8 +109,7 @@ public class BracketPane extends BorderPane {
                         BracketNode n = (BracketNode) mouseEvent.getSource();
                         int treeNum = bracketMap.get(n);
                         String displayName = currentBracket.getBracket().get(treeNum);
-                        try {
-                                TournamentInfo info = new TournamentInfo();
+                        if (info != null) {
                                 Team t = info.getTeam(displayName);
                                 logoRef = t.getLogoRef();
                                 //by Tyler - added the last two pieces of info to the pop up window
@@ -116,17 +117,10 @@ public class BracketPane extends BorderPane {
                                         + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
                                         + "\nAverage Offensive PPG: " + t.getOffensePPG()
                                         + "\nAverage Defensive PPG: "+ t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
+                        } else {//if for some reason TournamentInfo is not working, it
                                 // will display info not found
                                 text += "Info for " + displayName + "not found";
                         }
-                        //create a popup with the team info
-
-                        /*
-                        Tooltip tooltip = new Tooltip();
-                        tooltip.setText(text);
-                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
-                         */
 
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
                         alert.setTitle("Team Information");
@@ -145,6 +139,19 @@ public class BracketPane extends BorderPane {
                 BracketNode tmp = (BracketNode) mouseEvent.getSource();
                 tmp.setStyle("-fx-background-color: lightgreen;");
                 tmp.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
+                if (!tmp.displayName.equals("")) {
+                        Team t = info.getTeam(tmp.displayName);
+                        Tooltip tooltip = new Tooltip();
+                        tooltip.install(tmp, tooltip);
+                        String logoRef = t.getLogoRef();
+                        String text = "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
+                                + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
+                                + "\nAverage Offensive PPG: " + t.getOffensePPG()
+                                + "\nAverage Defensive PPG: "+ t.getDefensePPG();
+                        tooltip.setText(text);
+                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
+                        tmp.setOnMouseMoved(e -> tooltip.hide());
+                }
         };
 
         /**
@@ -187,6 +194,8 @@ public class BracketPane extends BorderPane {
                 buttons.add(customButton("MIDWEST"));
                 buttons.add(customButton("SOUTH"));
                 buttons.add(customButton("FULL"));
+
+                setInfo();
 
                 ArrayList<GridPane> gridPanes = new ArrayList<>();
                 String[] divisionNames = {"EAST", "WEST", "MIDWEST", "SOUTH", ""};
@@ -251,6 +260,15 @@ public class BracketPane extends BorderPane {
                                         MarchMadnessGUI.getButton().setDisable(false);
 
                         });
+                }
+        }
+
+        private void setInfo() {
+                try {
+                        info = new TournamentInfo();
+                }
+                catch (IOException e) {
+                        info = null;
                 }
         }
 
@@ -629,7 +647,6 @@ public class BracketPane extends BorderPane {
                         name.setTranslateX(5);
                         name.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
                         getChildren().addAll(name, rect);
-                        name.setTooltip(new Tooltip("hover!"));
                 }
 
                 /**
@@ -645,27 +662,6 @@ public class BracketPane extends BorderPane {
                 public void setName(String displayName) {
                         this.displayName = displayName;
                         name.setText(displayName);
-                }
-
-                private void setUpToolTip() {
-                        String infoText = "";
-                        String logoRef = "";
-                        try {
-                                TournamentInfo info = new TournamentInfo();
-                                Team t = info.getTeam(displayName);
-                                logoRef = t.getLogoRef();
-                                //by Tyler - added the last two pieces of info to the pop up window
-                                infoText += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
-                                        + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
-                                        + "\nAverage Offensive PPG: " + t.getOffensePPG()
-                                        + "\nAverage Defensive PPG: " + t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
-                                // will display info not found
-                                infoText += "Info for " + displayName + "not found";
-                        }
-                        Tooltip tooltip = new Tooltip();
-                        tooltip.setText(infoText);
-                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
                 }
         }
 }
