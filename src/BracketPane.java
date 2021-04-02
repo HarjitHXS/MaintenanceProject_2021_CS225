@@ -7,26 +7,18 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javafx.scene.layout.Region;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
 
-import javax.swing.text.Style;
 
 /**
  * Created by Richard and Ricardo on 5/3/17.
@@ -68,8 +60,11 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
-        //The buttons to choose a bracket (East, West, Full etc.)
+        //Samuel Hernandez:The buttons to choose a bracket (East, West, Full etc.)
         private ArrayList<StackPane> buttons;
+
+        //Samuel Hernandez: Array to have class access to all roots
+        private ArrayList<Root> roots;
 
         /**
          * Clears the entries of a team future wins
@@ -184,10 +179,8 @@ public class BracketPane extends BorderPane {
                 nodeMap = new HashMap<>();
                 panes = new HashMap<>();
                 nodes = new ArrayList<>();
-                ArrayList<Root> roots = new ArrayList<>();
-
+                roots = new ArrayList<>();
                 center = new GridPane();
-
                 buttons = new ArrayList<>();
                 buttons.add(customButton("EAST"));
                 buttons.add(customButton("WEST"));
@@ -198,7 +191,7 @@ public class BracketPane extends BorderPane {
                 ArrayList<GridPane> gridPanes = new ArrayList<>();
                 String[] divisionNames = {"EAST", "WEST", "MIDWEST", "SOUTH", ""};
                 for (int m = 0; m < buttons.size() - 1; m++) {
-                        roots.add(new Root(3 + m, divisionNames[m]));
+                        roots.add(new Root(3 + m, divisionNames[m], m));
                         panes.put(buttons.get(m), roots.get(m));
                 }
                 Pane finalPane = createFinalFour();
@@ -261,6 +254,37 @@ public class BracketPane extends BorderPane {
                 }
         }
 
+        /**
+         * Method adds labels to now what round teams are on, when meaking selection in individual sections
+         * of the bracket.
+         * @param index the section to add the labels to.
+         * @author Samuel Hernandez (Based on Justin Valas' code)
+         */
+        public void roundsForDivsions(int index){
+                if(index >= 0 && index < 4) {
+                        GridPane top = new GridPane();
+                        String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
+                        String style = " -fx-font: 15px Futura; -fx-background-color: lightgreen;" +
+                                "-fx-text-fill: #18284a; -fx-alignment:center;";
+
+                        for (int i = 0; i < roundArr.length; i++) {
+                                Label label = new Label(roundArr[i]);
+                                if (i == 0)
+                                        label.setMinWidth(120.0);
+                                else
+                                        label.setMinWidth(100.0);
+                                label.setAlignment(Pos.CENTER);
+                                top.add(label, i, 0);
+                        }
+
+                        //Add to top of the pane
+                        top.setStyle(style);
+                        top.setLayoutY(-20);
+                        roots.get(index).getChildren().remove(top);             //If already there will delete it
+                        roots.get(index).getChildren().add(top);
+                }
+        }
+
         private void createRounds() {
                 String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
 
@@ -299,12 +323,15 @@ public class BracketPane extends BorderPane {
 
         /**
          * Method sets the visible pane on command (Either of the 4 little or the full pane)
+         * @param index the pane to set visible
+         * @author Samuel Hernandez
          */
         public void setVisiblePane(int index){
-                setCenter(null);                         //Center is the grid pane
+                setCenter(null);
                 center.add(new ScrollPane(panes.get(buttons.get(index))), 0, 0);
                 center.setAlignment(Pos.CENTER);
                 setCenter(center);
+                roundsForDivsions(index);                       //Add round labels
         }
 
         public int getDisplayedSubtree() {
@@ -312,13 +339,14 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Method to add a triangle in the screen
-         * Triangle appears when FULL bracket is visible only. It is centered to the screen.
+         * Method to add the triangle in the screen
+         * Triangle appears when full bracket is visible only. It is centered to the screen.
+         * @author Samuel Hernandez and @Harjit Singh
+         * @param finalPane the pane to add the triangles to
          */
-
         private StackPane createTriangle(Pane finalPane) {
                 StackPane stackPane = new StackPane();
-                Polygon triangle1 = new Polygon();
+                Polygon triangle1 = new Polygon();                              //Create triangles
                 Polygon triangle2 = new Polygon();
                 triangle1.getPoints().addAll(new Double[]{
                         finalPane.getMinWidth()/ 2.0, 150.0,
@@ -333,7 +361,7 @@ public class BracketPane extends BorderPane {
                 );
                 triangle2.setFill(Color.rgb(24, 40, 74));
 
-                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");
+                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");           //Create text
                 Label label2 = new Label("\n\n\nBRACKET");
                 String style = " -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 16;";
                 label1.setStyle(style);
@@ -479,9 +507,15 @@ public class BracketPane extends BorderPane {
         private class Root extends Pane {
 
                 private int location;
+                //Samuel Hernandez. Holds the division name (East, West, etc.)
+                private Label division;
+                //Samuel Hernandez. Holds the number of the root.
+                private int number;
 
-                public Root(int location, String divisionName) {
+                public Root(int location, String divisionName, int number) {
                         this.location = location;
+                        this.number = number;
+                        this.setTranslateY(20);
                         createVertices(420, 200, 100, 20, 0, 0);
                         createVertices(320, 119, 100, 200, 1, 0);
                         createVertices(220, 60, 100, 100, 2, 200);
@@ -492,12 +526,31 @@ public class BracketPane extends BorderPane {
                                 n.setOnMouseEntered(enter);
                                 n.setOnMouseExited(exit);
                         }
-                        Label division = new Label(divisionName);
+                        division = new Label(divisionName);
+                        setTextAndSpace();
+                }
+
+                /**
+                 * Method sets the name of the division and also ads extra space in the bottom to be fully displayed
+                 * in scroll pane.
+                 * @author Samuel Hernandez
+                 */
+                private void setTextAndSpace(){
                         division.setLayoutX(350);
                         division.setLayoutY(190);
                         division.setStyle("-fx-font: 20px futura; -fx-text-fill: #16284f");
                         division.setFont(new Font(20));
                         getChildren().add(division);
+
+                        //Add extra space to visualize complete in scroll panel
+                        if(number == 1) {
+                                Line l = new Line();
+                                l.setStartY(420);
+                                l.setStartX(0);
+                                l.setEndY(420);
+                                l.setEndX(0);
+                                getChildren().add(l);
+                        }
                 }
 
                 /**

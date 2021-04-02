@@ -232,6 +232,8 @@ public class MarchMadnessGUI extends Application {
         bracketPane.clear();
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
+
+        //Samuel Hernandez: Added functionality to not be kicked out of division when clearing.
         bracketPane.setVisiblePane(visible);
 
     }
@@ -373,6 +375,7 @@ public class MarchMadnessGUI extends Application {
 
     /**
      * Method to allow user to see his/her prediction of the tournament and not only the results
+     * @author Samuel Hernandez
      */
     private void viewMine(){
         bracketPane = new BracketPane(selectedBracket);
