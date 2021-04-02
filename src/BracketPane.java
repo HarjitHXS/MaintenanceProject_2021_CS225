@@ -129,7 +129,7 @@ public class BracketPane extends BorderPane {
                          */
 
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
-                        alert.setTitle("March Madness Bracket Simulator");
+                        alert.setTitle("Team Information");
                         alert.setHeaderText(null);
 
                         alert.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
