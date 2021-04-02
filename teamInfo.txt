@@ -63,7 +63,7 @@ Florida
 
 East Tenn. St.
 Buccaneers
-The best part of waking up is Folgers in your cup. Also the Bucaneers are pretty good too.
+The best part of waking up is Folgers in your cup. Also the Buccaneers are pretty good too.
 13
 71.1
 67.7
@@ -144,7 +144,7 @@ Troy
 
 Kansas
 Jayhawks
-The Kansas Jayhawks will wipe the floor with their competators!
+The Kansas Jayhawks will wipe the floor with their competitors!
 1
 83.2
 71.9
@@ -162,7 +162,7 @@ UC Davis
 
 Miami(Fla.)
 Hurricanes
-When they're not kicking back in beautful 80 degree weather, they're kicking back in beautiful 60 degree weather.
+When they're not kicking back in beautiful 80 degree weather, they're kicking back in beautiful 60 degree weather.
 8
 69.0
 64.1
@@ -396,7 +396,7 @@ Florida Gulf Coast
 
 St. Mary's(Cal.)
 Gaels
-From Morega, CA these guys never back down even in the face of utter defeat.
+From Moraga, CA these guys never back down even in the face of utter defeat.
 7
 72.0
 57.5
@@ -414,7 +414,7 @@ VCU
 
 Arizona
 Wildcats
-The Tucston, Arizona Wildcats are pretty good, but are they GREAT?
+The Tucson, Arizona Wildcats are pretty good, but are they GREAT?
 2
 76.6
 65.9
@@ -432,7 +432,7 @@ North Dakota
 
 North Carolina
 Tar Heels
-Chapell Hill is the home of the Tar Heels of the University of North Carolina.
+Chapel Hill is the home of the Tar Heels of the University of North Carolina.
 1
 84.4
 70.6
@@ -450,7 +450,7 @@ Texas Southern
 
 Arkansas
 Razorbacks
-The Razorbacks from the big ol' town of Feyetteville, Arkansas are truely an unforgiving team.
+The Razorbacks from the big ol' town of Fayetteville, Arkansas are truly an unforgiving team.
 8
 79.3
 73.9
@@ -567,7 +567,7 @@ Kentucky
 
 N. Kentucky
 Norse
-Residing in the beautiful, but repetative Highland Heights of Kentucky. These guys are pretty dang high up.
+Residing in the beautiful, but repetitive Highland Heights of Kentucky. These guys are pretty dang high up.
 15
 74.8
 69.5
