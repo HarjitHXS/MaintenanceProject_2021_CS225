@@ -40,7 +40,7 @@ import javax.swing.*;
 public class MarchMadnessGUI extends Application {
 
 
-    //all the gui ellements
+    //all the gui elements
     private BorderPane root;
     private ToolBar toolBar;
     private ToolBar btoolBar;
@@ -55,23 +55,14 @@ public class MarchMadnessGUI extends Application {
     private Button quit;
     private Button viewMine;
     private  Image img1;
-
-    //Hello
     //allows you to navigate back to division selection screen
     private Button back;
-
-
     private  Bracket startingBracket;
     //reference to currently logged in bracket
     private Bracket selectedBracket;
     private Bracket simResultBracket;
-
-
     private ArrayList<Bracket> playerBrackets;
     private HashMap<String, Bracket> playerMap;
-
-
-
     private ScoreBoardTable scoreBoard;
     private TableView table;
     private BracketPane bracketPane;
@@ -388,6 +379,7 @@ public class MarchMadnessGUI extends Application {
     /**
      * Gets clear button so that bracket pane can enable or disable the clear button depending on what
      * section the user chooses.
+     * @author Samuel Hernandez
      */
     public static Button getButton(){
         return clearButton;
