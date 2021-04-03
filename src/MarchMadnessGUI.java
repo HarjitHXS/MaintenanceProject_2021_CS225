@@ -68,8 +68,6 @@ public class MarchMadnessGUI extends Application {
     private BracketPane bracketPane;
     private GridPane loginP;
     private TournamentInfo teamInfo;
-    private final StackPane firstscene = new StackPane();
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -103,7 +101,6 @@ public class MarchMadnessGUI extends Application {
                 BackgroundSize.DEFAULT)));
         //display login screen
         login();
-
         setActions();
         root.setTop(toolBar);
 
