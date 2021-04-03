@@ -533,9 +533,6 @@ public class BracketPane extends BorderPane {
                 nodeMap.put(1, nodeFinal1);
                 nodeMap.put(2, nodeFinal2);
                 nodeMap.put(0, nodeFinal0);
-//                nodeFinal0.setStyle("-fx-border-color: #18284a");
-//                nodeFinal1.setStyle("-fx-border-color: #18284a");
-//                nodeFinal2.setStyle("-fx-border-color: #18284a");
                 return finalPane;
         }
 
