@@ -102,7 +102,6 @@ public class MarchMadnessGUI extends Application {
                 BackgroundSize.DEFAULT)));
         //display login screen
         login();
-
         setActions();
         root.setTop(toolBar);
 
