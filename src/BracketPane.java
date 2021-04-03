@@ -151,7 +151,7 @@ public class BracketPane extends BorderPane {
                         tooltip.setText(text);
                         tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
                         tooltip.setTextAlignment(TextAlignment.LEFT);
-                        tmp.setOnMouseMoved(e -> tooltip.hide());
+
                 }
         };
 
