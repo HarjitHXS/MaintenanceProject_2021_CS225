@@ -68,7 +68,6 @@ public class MarchMadnessGUI extends Application {
     private BracketPane bracketPane;
     private GridPane loginP;
     private TournamentInfo teamInfo;
-    private final StackPane firstscene = new StackPane();
 
 
     @Override
