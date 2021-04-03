@@ -150,7 +150,6 @@ public class BracketPane extends BorderPane {
                                 + "\nAverage Defensive PPG: "+ t.getDefensePPG();
                         tooltip.setText(text);
                         tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
-                        tmp.setOnMouseMoved(e -> tooltip.hide());
                 }
         };
 
@@ -273,7 +272,7 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Method adds labels to now what round teams are on, when meaking selection in individual sections
+         * Method adds labels to now what round teams are on, when making selection in individual sections
          * of the bracket.
          * @param index the section to add the labels to.
          * @author Samuel Hernandez (Based on Ariel Liberzon's code)
@@ -485,15 +484,46 @@ public class BracketPane extends BorderPane {
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
                 finalPane.setMinWidth(400.0);
-                BracketNode nodeFinal0 = new BracketNode("", 162, 300, 70, 0);
-                BracketNode nodeFinal1 = new BracketNode("", 75, 400, 70, 0);
-                BracketNode nodeFinal2 = new BracketNode("", 250, 400, 70, 0);
+                BracketNode nodeFinal0 = new BracketNode("", 175, 272, 70, 20);
+                BracketNode nodeFinal1 = new BracketNode("", 70, 380, 75, 20);
+                BracketNode nodeFinal2 = new BracketNode("", 260, 480, 80, 20);
                 nodeFinal0.setName(currentBracket.getBracket().get(0));
                 nodeFinal1.setName(currentBracket.getBracket().get(1));
                 nodeFinal2.setName(currentBracket.getBracket().get(2));
+
+                nodeFinal0.setOnMouseClicked(clicked);
+                nodeFinal0.setOnMouseEntered(enter);
+                nodeFinal0.setOnMouseExited(exit);
+
+                nodeFinal1.setOnMouseClicked(clicked);
+                nodeFinal1.setOnMouseEntered(enter);
+                nodeFinal1.setOnMouseExited(exit);
+
+                nodeFinal2.setOnMouseClicked(clicked);
+                nodeFinal2.setOnMouseEntered(enter);
+                nodeFinal2.setOnMouseExited(exit);
+
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
+
+                Rectangle rect = new Rectangle(100,260,200,40);
+                rect.setFill(Color.TRANSPARENT);
+                rect.setStroke(Color.BLACK);
+                rect.setStrokeWidth(2);
+                finalPane.getChildren().add(rect);
+
+                Label lblChamp = new Label("National Champion");
+                lblChamp.setStyle("-fx-font: 20px 'Bauhaus 93'; -fx-text-fill: #16284f");
+                lblChamp.setLayoutX(115);
+                lblChamp.setLayoutY(305);
+                finalPane.getChildren().add(lblChamp);
+
+                Line line1 = new Line(0,220,0,620);
+                Line line2 = new Line(400,220,400,620);
+                Line line3 = new Line(0,400,200,400);
+                Line line4 = new Line(200,500,400,500);
+                finalPane.getChildren().addAll(line1,line2,line3,line4);
 
                 finalPane.getChildren().add(createTriangle(finalPane));
 
@@ -503,21 +533,9 @@ public class BracketPane extends BorderPane {
                 nodeMap.put(1, nodeFinal1);
                 nodeMap.put(2, nodeFinal2);
                 nodeMap.put(0, nodeFinal0);
-
-                nodeFinal0.setOnMouseClicked(clicked);
-                nodeFinal0.setOnMouseDragEntered(enter);
-                nodeFinal0.setOnMouseDragExited(exit);
-
-                nodeFinal1.setOnMouseClicked(clicked);
-                nodeFinal1.setOnMouseDragEntered(enter);
-                nodeFinal1.setOnMouseDragExited(exit);
-
-                nodeFinal2.setOnMouseClicked(clicked);
-                nodeFinal2.setOnMouseDragEntered(enter);
-                nodeFinal2.setOnMouseDragExited(exit);
-                nodeFinal0.setStyle("-fx-border-color: #18284a");
-                nodeFinal1.setStyle("-fx-border-color: #18284a");
-                nodeFinal2.setStyle("-fx-border-color: #18284a");
+//                nodeFinal0.setStyle("-fx-border-color: #18284a");
+//                nodeFinal1.setStyle("-fx-border-color: #18284a");
+//                nodeFinal2.setStyle("-fx-border-color: #18284a");
                 return finalPane;
         }
 
@@ -634,7 +652,7 @@ public class BracketPane extends BorderPane {
                  * @param x        The starting x location
                  * @param y        The starting y location
                  * @param rX       The width of the rectangle to fill pane
-                 * @param rY       The height of the rectangle
+                 * @param rY       The height of the rectanglej
                  */
                 public BracketNode(String displayName, int x, int y, int rX, int rY) {
                         this.setLayoutX(x);
