@@ -1,5 +1,3 @@
-//package marchmadness;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,11 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 
 /**
  *  MarchMadnessGUI
@@ -38,7 +32,6 @@ import javax.swing.*;
  * @author Grant Osborn
  */
 public class MarchMadnessGUI extends Application {
-
 
     //all the gui elements
     private BorderPane root;
@@ -54,11 +47,9 @@ public class MarchMadnessGUI extends Application {
     private Button help;
     private Button quit;
     private Button viewMine;
-    private  Image img1;
-    //allows you to navigate back to division selection screen
+    private Image img1;
     private Button back;
-    private  Bracket startingBracket;
-    //reference to currently logged in bracket
+    private Bracket startingBracket;
     private Bracket selectedBracket;
     private Bracket simResultBracket;
     private ArrayList<Bracket> playerBrackets;
@@ -69,10 +60,8 @@ public class MarchMadnessGUI extends Application {
     private GridPane loginP;
     private TournamentInfo teamInfo;
 
-
     @Override
     public void start(Stage primaryStage) {
-
         //try to load all the files, if there is an error display it
         try{
             teamInfo=new TournamentInfo();
@@ -83,12 +72,8 @@ public class MarchMadnessGUI extends Application {
         }
         //deserialize stored brackets
         playerBrackets = loadBrackets();
-
         playerMap = new HashMap<>();
         addAllToMap();
-
-
-
         //the main layout container
         root = new BorderPane();
         Group root1 = new Group();
@@ -174,6 +159,7 @@ public class MarchMadnessGUI extends Application {
         clearButton.setDisable(true);
         displayPane(loginP);
     }
+
     private void logout() {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Logout");
@@ -236,7 +222,6 @@ public class MarchMadnessGUI extends Application {
 
         //Samuel Hernandez: Added functionality to not be kicked out of division when clearing.
         bracketPane.setVisiblePane(visible);
-
     }
 
     /**
@@ -290,15 +275,9 @@ public class MarchMadnessGUI extends Application {
 
         }else{
             infoAlert("You can only finalize a bracket once it has been completed.");
-            //go back to bracket section selection screen
-            // bracketPane=new BracketPane(selectedBracket);
             displayPane(bracketPane);
 
         }
-        //bracketPane=new BracketPane(selectedBracket);
-
-
-
     }
 
 
@@ -570,7 +549,6 @@ public class MarchMadnessGUI extends Application {
         alert.showAndWait();
         return alert.getResult()==ButtonType.YES;
     }
-
 
     /**
      * Tayon Watson 5/5
