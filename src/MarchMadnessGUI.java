@@ -419,11 +419,11 @@ public class MarchMadnessGUI extends Application {
         loginPane.setVgap(10);
         loginPane.setPadding(new Insets(5, 5, 5, 5));
 
-        Text welcomeMessage = new Text("March Madness Login Welcome");
+        Text welcomeMessage = new Text("March Madness Bracket Simulator");
         welcomeMessage.setFill(Color.WHITE);
         loginPane.add(welcomeMessage, 0, 0, 2, 1);
 
-        Label userName = new Label("User Name: ");
+        Label userName = new Label("Username: ");
         userName.setTextFill(Color.WHITE);
         loginPane.add(userName, 0, 1);
 
