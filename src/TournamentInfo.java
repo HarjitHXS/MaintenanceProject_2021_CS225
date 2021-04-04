@@ -82,7 +82,8 @@ public class TournamentInfo{//renamed from teamInfo by matt 5/4
         for (int i = 62; i >= 0; i--) {
         /* The equation for score that I settled on is this:
          * (Random int 75-135) * (1 - 0.02 * seed ranking)
-         * This way, the multiplier would be between 0.68 and 0.98. Multiply that by 75-135, and you get a reasonable score with room for chance to prevail for lower teams. */
+         * This way, the multiplier would be between 0.68 and 0.98. Multiply that by 75-135, and you get a reasonable
+         * score with room for chance to prevail for lower teams. */
 
             int index1 = 2*i+1;
             int index2 = 2*i+2;

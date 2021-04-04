@@ -514,7 +514,7 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(rect);
 
                 Label lblChamp = new Label("National Champion");
-                lblChamp.setStyle("-fx-font: 20px 'Bauhaus 93'; -fx-text-fill: #16284f");
+                lblChamp.setStyle("-fx-font: 20px 'Futura'; -fx-text-fill: #16284f");
                 lblChamp.setLayoutX(115);
                 lblChamp.setLayoutY(305);
                 finalPane.getChildren().add(lblChamp);
