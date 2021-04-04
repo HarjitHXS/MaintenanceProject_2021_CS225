@@ -39,10 +39,10 @@ public class Bracket implements Serializable //Hillary: This bracket class is to
      * @param starting, master bracket pre-simulation
      */
     public Bracket(Bracket starting){
-        /*bracket = new ArrayList<String>();
+        bracket = new ArrayList<String>();
         for(int i=0; i<127; i++){
             bracket.add(i,starting.getBracket().get(i));
-        }*/
+        }
         //code above removed and replaced by matt 5/1
         bracket = new ArrayList<String>(starting.getBracket());
     }
@@ -102,7 +102,7 @@ public class Bracket implements Serializable //Hillary: This bracket class is to
             int child1 = 2 * root + 1;
             int child2 = 2 * root + 2;
 
-            if (child1 < 63) {//child is above round 1
+            if (child1 < 63) {          //Samuel Hernandez: Bug fixed that caused Villanova to disappear.
                 resetSubtree(child1);
             }
             if (child2 < 63) {

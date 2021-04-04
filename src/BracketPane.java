@@ -7,24 +7,18 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javafx.scene.layout.Region;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
+
 
 /**
  * Created by Richard and Ricardo on 5/3/17.
@@ -50,7 +44,8 @@ public class BracketPane extends BorderPane {
         /**
          * Reference to active subtree within current bracket.
          */
-        private int displayedSubtree;
+        //Samuel Hernandez: Made static to keep reference value when resetting Bracket Panes
+        private static int displayedSubtree;
         /**
          * Keeps track of whether or not bracket has been finalized.
          */
@@ -65,6 +60,13 @@ public class BracketPane extends BorderPane {
          */
         private HashMap<Integer, BracketNode> nodeMap = new HashMap<>();
 
+        //Samuel Hernandez:The buttons to choose a bracket (East, West, Full etc.)
+        private ArrayList<StackPane> buttons;
+
+        //Samuel Hernandez: Array to have class access to all roots
+        private ArrayList<Root> roots;
+
+        private TournamentInfo info;
 
         /**
          * Clears the entries of a team future wins
@@ -107,8 +109,7 @@ public class BracketPane extends BorderPane {
                         BracketNode n = (BracketNode) mouseEvent.getSource();
                         int treeNum = bracketMap.get(n);
                         String displayName = currentBracket.getBracket().get(treeNum);
-                        try {
-                                TournamentInfo info = new TournamentInfo();
+                        if (info != null) {
                                 Team t = info.getTeam(displayName);
                                 logoRef = t.getLogoRef();
                                 //by Tyler - added the last two pieces of info to the pop up window
@@ -116,20 +117,13 @@ public class BracketPane extends BorderPane {
                                         + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
                                         + "\nAverage Offensive PPG: " + t.getOffensePPG()
                                         + "\nAverage Defensive PPG: "+ t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
+                        } else {//if for some reason TournamentInfo is not working, it
                                 // will display info not found
                                 text += "Info for " + displayName + "not found";
                         }
-                        //create a popup with the team info
-
-                        /*
-                        Tooltip tooltip = new Tooltip();
-                        tooltip.setText(text);
-                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
-                         */
 
                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
-                        alert.setTitle("March Madness Bracket Simulator");
+                        alert.setTitle("Team Information");
                         alert.setHeaderText(null);
 
                         alert.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
@@ -145,6 +139,20 @@ public class BracketPane extends BorderPane {
                 BracketNode tmp = (BracketNode) mouseEvent.getSource();
                 tmp.setStyle("-fx-background-color: lightgreen;");
                 tmp.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
+                if (!tmp.displayName.equals("")) {
+                        Team t = info.getTeam(tmp.displayName);
+                        Tooltip tooltip = new Tooltip();
+                        tooltip.install(tmp, tooltip);
+                        String logoRef = t.getLogoRef();
+                        String text = "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
+                                + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
+                                + "\nAverage Offensive PPG: " + t.getOffensePPG()
+                                + "\nAverage Defensive PPG: "+ t.getDefensePPG();
+                        tooltip.setText(text);
+                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
+                        tooltip.setTextAlignment(TextAlignment.LEFT);
+
+                }
         };
 
         /**
@@ -163,6 +171,9 @@ public class BracketPane extends BorderPane {
 
         private GridPane center;
         private GridPane fullPane;
+        private GridPane topLeftPane;
+        private GridPane topCenterPane;
+        private GridPane topRightPane;
 
 
         /**
@@ -170,28 +181,27 @@ public class BracketPane extends BorderPane {
          * Initializes the properties needed to construct a bracket.
          */
         public BracketPane(Bracket currentBracket) {
-                displayedSubtree=0;
                 this.currentBracket = currentBracket;
 
                 bracketMap = new HashMap<>();
                 nodeMap = new HashMap<>();
                 panes = new HashMap<>();
                 nodes = new ArrayList<>();
-                ArrayList<Root> roots = new ArrayList<>();
-
+                roots = new ArrayList<>();
                 center = new GridPane();
-
-                ArrayList<StackPane> buttons = new ArrayList<>();
+                buttons = new ArrayList<>();
                 buttons.add(customButton("EAST"));
                 buttons.add(customButton("WEST"));
                 buttons.add(customButton("MIDWEST"));
                 buttons.add(customButton("SOUTH"));
                 buttons.add(customButton("FULL"));
 
-                ArrayList<GridPane> gridPanes = new ArrayList<>();
+                setInfo();
 
+                ArrayList<GridPane> gridPanes = new ArrayList<>();
+                String[] divisionNames = {"EAST", "WEST", "MIDWEST", "SOUTH", ""};
                 for (int m = 0; m < buttons.size() - 1; m++) {
-                        roots.add(new Root(3 + m));
+                        roots.add(new Root(3 + m, divisionNames[m], m));
                         panes.put(buttons.get(m), roots.get(m));
                 }
                 Pane finalPane = createFinalFour();
@@ -205,15 +215,20 @@ public class BracketPane extends BorderPane {
                 gp2.add(roots.get(2), 0, 0);
                 gp2.add(roots.get(3), 0, 1);
                 gp2.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-
-                fullPane.add(gp1, 0, 0);
-                fullPane.add(finalPane, 1, 0, 1, 2);
-                fullPane.add(gp2, 2, 0);
+                fullPane.add(gp1, 0, 1);
+                fullPane.add(finalPane, 1, 1, 1, 2);
+                fullPane.add(gp2, 2, 1);
                 fullPane.setAlignment(Pos.CENTER);
                 panes.put(buttons.get((buttons.size() - 1)), fullPane);
                 finalPane.toBack();
 
-                //  ializes the button grid
+                topLeftPane = new GridPane();
+                topCenterPane = new GridPane();
+                topRightPane = new GridPane();
+
+                createRounds();
+
+                // Initializes the button grid
                 GridPane buttonGrid = new GridPane();
                 for (int i = 0; i < buttons.size(); i++)
                         buttonGrid.add(buttons.get(i), 0, i);
@@ -222,29 +237,24 @@ public class BracketPane extends BorderPane {
                 // set default center to the button grid
                 this.setCenter(buttonGrid);
 
-                for (StackPane t : buttons) {
-                        t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
-                        t.setOnMouseEntered(mouseEvent -> {
-                                t.setStyle("-fx-background-color: LIGHTGREEN; -fx-font-family: Futura;");
-                                t.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
+                //For all buttons set its functionality
+                for(int i = 0; i < buttons.size(); i++){
+                StackPane button = buttons.get(i);
+                        button.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
+                        button.setOnMouseEntered(mouseEvent -> {
+                                button.setStyle("-fx-background-color: LIGHTGREEN; -fx-font-family: Futura;");
+                                button.setEffect(new InnerShadow(10, Color.LIGHTGREEN));
                         });
-                        t.setOnMouseExited(mouseEvent -> {
-                                t.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
-                                t.setEffect(null);
+                        button.setOnMouseExited(mouseEvent -> {
+                                button.setStyle("-fx-background-color: #8bc4de; -fx-font-family: Futura;");
+                                button.setEffect(null);
                         });
-                        t.setOnMouseClicked(mouseEvent -> {
-                                setCenter(null);
-                                /**
-                                 * @update Grant & Tyler 
-                                 * 			panes are added as ScrollPanes to retain center alignment when moving through full-view and region-view
-                                 */
-                                center.add(new ScrollPane(panes.get(t)), 0, 0);
-                                center.setAlignment(Pos.CENTER);
-                                setCenter(center);
-                                //Grant 5/7 this is for clearing the tree it kind of works 
-                                displayedSubtree=buttons.indexOf(t)==7?0:buttons.indexOf(t)+3;
-                                if(buttons.indexOf(t) == 4) {
-                                        createTriangle();
+
+                        //What happens when click happens in button
+                        button.setOnMouseClicked(mouseEvent -> {
+                                setVisiblePane(buttons.indexOf(button));
+                                displayedSubtree=buttons.indexOf(button)==7?0:buttons.indexOf(button)+3;
+                                if(buttons.indexOf(button) == 4) {
                                         MarchMadnessGUI.getButton().setDisable(true);
                                 }
                                 else
@@ -254,28 +264,139 @@ public class BracketPane extends BorderPane {
                 }
         }
 
-        /**
-         * Method to add a triangle in the screen
-         * Triangle appears when FULL bracket is visible only. It is centered to the screen.
-         */
-        private void createTriangle() {
-                Polygon triangle = new Polygon();
-                double center = getWidth() / 2.0;
-                triangle.getPoints().addAll(new Double[]{
-                        center, 200.0,
-                        center + 250, 8.0,
-                        center - 250, 8.0});
-                triangle.setFill(Color.rgb(24, 40, 74));
-                triangle.setStroke(Color.LIGHTGREEN);
-                triangle.setStrokeWidth(10);
-                Text text = new Text("\t  2021 NCAA TOURNAMENT\n\t\t\tBRACKET");
-                Font font = new Font("Futura", 25);
-                text.setFill(Color.WHITE);
-                text.setFont(font);
-                text.setX(center - 240);
-                text.setY(50);
-                getChildren().addAll(triangle, text);
+        private void setInfo() {
+                try {
+                        info = new TournamentInfo();
+                }
+                catch (IOException e) {
+                        info = null;
+                }
         }
+
+        /**
+         * Method adds labels to now what round teams are on, when meaking selection in individual sections
+         * of the bracket.
+         * @param index the section to add the labels to.
+         * @author Samuel Hernandez (Based on Ariel Liberzon's code)
+         */
+        public void roundsForDivsions(int index){
+                if(index >= 0 && index < 4) {
+                        GridPane top = new GridPane();
+                        String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
+                        String style = " -fx-font: 15px Futura; -fx-background-color: lightgreen;" +
+                                "-fx-text-fill: #18284a; -fx-alignment:center;";
+
+                        for (int i = 0; i < roundArr.length; i++) {
+                                Label label = new Label(roundArr[i]);
+                                if (i == 0)
+                                        label.setMinWidth(120.0);
+                                else
+                                        label.setMinWidth(100.0);
+                                label.setAlignment(Pos.CENTER);
+                                top.add(label, i, 0);
+                        }
+
+                        //Add to top of the pane
+                        top.setStyle(style);
+                        top.setLayoutY(-20);
+                        roots.get(index).getChildren().remove(top);             //If already there will delete it
+                        roots.get(index).getChildren().add(top);
+                }
+        }
+
+        /**
+         * Creates a pane
+         */
+        private void createRounds() {
+                String[] roundArr = {"ROUND1", "ROUND 2", "SWEET 16", "ELITE 8", "FINAL FOUR"};
+
+                for (int i = 0; i < roundArr.length; i++) {
+                        Label label = new Label(roundArr[i]);
+                        if (i == 0)
+                                label.setMinWidth(120.0);
+                        else
+                                label.setMinWidth(100.0);
+                        label.setAlignment(Pos.CENTER);
+                        topLeftPane.add(label, i, 0);
+                }
+
+                topCenterPane.add(new Label("CHAMPIONSHIP"), 0, 0);
+                for (int i = 0; i < roundArr.length; i++) {
+                        Label label = new Label(roundArr[roundArr.length - 1 - i]);
+                        label.setTextAlignment(TextAlignment.CENTER);
+                        if (i == roundArr.length - 1)
+                                label.setMinWidth(120.0);
+                        else
+                                label.setMinWidth(100.0);
+                        label.setAlignment(Pos.CENTER);
+                        topRightPane.add(label, i, 0);
+                }
+
+                fullPane.add(topLeftPane, 0,0);
+                fullPane.add(topCenterPane, 1,0);
+                fullPane.add(topRightPane, 2,0);
+
+                String style = " -fx-font-family: Futura; -fx-background-color: lightgreen;" +
+                        "-fx-text-fill: #18284a; -fx-alignment:center;";
+                topLeftPane.setStyle(style);
+                topCenterPane.setStyle(style);
+                topRightPane.setStyle(style);
+        }
+
+        /**
+         * Method sets the visible pane on command (Either of the 4 little or the full pane)
+         * @param index the pane to set visible
+         * @author Samuel Hernandez
+         */
+        public void setVisiblePane(int index){
+                setCenter(null);
+                center.add(new ScrollPane(panes.get(buttons.get(index))), 0, 0);
+                center.setAlignment(Pos.CENTER);
+                setCenter(center);
+                roundsForDivsions(index);                       //Add round labels
+        }
+
+        public int getDisplayedSubtree() {
+                return displayedSubtree;
+        }
+
+        /**
+         * Method to add the triangle in the screen
+         * Triangle appears when full bracket is visible only. It is centered to the screen.
+         * @author Samuel Hernandez and @Harjit Singh
+         * @param finalPane the pane to add the triangles to
+         */
+        private StackPane createTriangle(Pane finalPane) {
+                StackPane stackPane = new StackPane();
+                Polygon triangle1 = new Polygon();                              //Create triangles
+                Polygon triangle2 = new Polygon();
+                triangle1.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 150.0,
+                        finalPane.getMinWidth(), 0.0,
+                        0.0, 0.0}
+                );
+                triangle1.setFill(Color.rgb(139, 196, 222));
+                triangle2.getPoints().addAll(new Double[]{
+                        finalPane.getMinWidth()/ 2.0, 140.0,
+                        finalPane.getMinWidth() - 10.0, 0.0,
+                        10.0, 0.0}
+                );
+                triangle2.setFill(Color.rgb(24, 40, 74));
+
+                Label label1 = new Label("\n\n2017 NCAA TOURNAMENT");           //Create text
+                Label label2 = new Label("\n\n\nBRACKET");
+                String style = " -fx-font-family: Futura; -fx-text-fill: #ffffff; -fx-font-scale: 16;";
+                label1.setStyle(style);
+                label2.setStyle(style);
+                label1.setAlignment(Pos.TOP_CENTER);
+                label2.setAlignment(Pos.TOP_CENTER);
+
+                stackPane.getChildren().addAll(triangle1, triangle2 ,label1, label2);
+                stackPane.setAlignment(Pos.TOP_CENTER);
+                return stackPane;
+        }
+
+
 
         /**
          * Helpful method to retrieve our magical numbers
@@ -364,6 +485,7 @@ public class BracketPane extends BorderPane {
 
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
+                finalPane.setMinWidth(400.0);
                 BracketNode nodeFinal0 = new BracketNode("", 162, 300, 70, 0);
                 BracketNode nodeFinal1 = new BracketNode("", 75, 400, 70, 0);
                 BracketNode nodeFinal2 = new BracketNode("", 250, 400, 70, 0);
@@ -373,6 +495,9 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal0);
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
+
+                finalPane.getChildren().add(createTriangle(finalPane));
+
                 bracketMap.put(nodeFinal1, 1);
                 bracketMap.put(nodeFinal2, 2);
                 bracketMap.put(nodeFinal0, 0);
@@ -394,8 +519,6 @@ public class BracketPane extends BorderPane {
                 nodeFinal0.setStyle("-fx-border-color: #18284a");
                 nodeFinal1.setStyle("-fx-border-color: #18284a");
                 nodeFinal2.setStyle("-fx-border-color: #18284a");
-                finalPane.setMinWidth(400.0);
-
                 return finalPane;
         }
 
@@ -406,9 +529,15 @@ public class BracketPane extends BorderPane {
         private class Root extends Pane {
 
                 private int location;
+                //Samuel Hernandez. Holds the division name (East, West, etc.)
+                private Label division;
+                //Samuel Hernandez. Holds the number of the root.
+                private int number;
 
-                public Root(int location) {
+                public Root(int location, String divisionName, int number) {
                         this.location = location;
+                        this.number = number;
+                        this.setTranslateY(20);
                         createVertices(420, 200, 100, 20, 0, 0);
                         createVertices(320, 119, 100, 200, 1, 0);
                         createVertices(220, 60, 100, 100, 2, 200);
@@ -418,6 +547,31 @@ public class BracketPane extends BorderPane {
                                 n.setOnMouseClicked(clicked);
                                 n.setOnMouseEntered(enter);
                                 n.setOnMouseExited(exit);
+                        }
+                        division = new Label(divisionName);
+                        setTextAndSpace();
+                }
+
+                /**
+                 * Method sets the name of the division and also ads extra space in the bottom to be fully displayed
+                 * in scroll pane.
+                 * @author Samuel Hernandez
+                 */
+                private void setTextAndSpace(){
+                        division.setLayoutX(300);
+                        division.setLayoutY(190);
+                        division.setStyle("-fx-font: 20px futura; -fx-text-fill: #16284f");
+                        division.setFont(new Font(20));
+                        getChildren().add(division);
+
+                        //Add extra space to visualize complete in scroll panel
+                        if(number == 1) {
+                                Line l = new Line();
+                                l.setStartY(420);
+                                l.setStartX(0);
+                                l.setEndY(420);
+                                l.setEndX(0);
+                                getChildren().add(l);
                         }
                 }
 
@@ -457,11 +611,9 @@ public class BracketPane extends BorderPane {
                                 }
                                 ArrayList<Integer> tmpHelp = helper(location, num);
                                 for (int j = 0; j < aNodeList.size(); j++) {
-                                        //System.out.println(currentBracket.getBracket().get(tmpHelp.get(j)));
                                         aNodeList.get(j).setName(currentBracket.getBracket().get(tmpHelp.get(j)));
                                         bracketMap.put(aNodeList.get(j), tmpHelp.get(j));
                                         nodeMap.put(tmpHelp.get(j), aNodeList.get(j));
-                                        //System.out.println(bracketMap.get(aNodeList.get(j)));
                                 }
                         }
 
@@ -496,8 +648,6 @@ public class BracketPane extends BorderPane {
                         name.setTranslateX(5);
                         name.setStyle("-fx-font-family: Futura; -fx-text-fill: #16284f");
                         getChildren().addAll(name, rect);
-                        //setToolTip();
-
                 }
 
                 /**
@@ -513,27 +663,6 @@ public class BracketPane extends BorderPane {
                 public void setName(String displayName) {
                         this.displayName = displayName;
                         name.setText(displayName);
-                }
-
-                private void setToolTip() {
-                        String infoText = "";
-                        String logoRef = "";
-                        try {
-                                TournamentInfo info = new TournamentInfo();
-                                Team t = info.getTeam(displayName);
-                                logoRef = t.getLogoRef();
-                                //by Tyler - added the last two pieces of info to the pop up window
-                                infoText += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
-                                        + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
-                                        + "\nAverage Offensive PPG: " + t.getOffensePPG()
-                                        + "\nAverage Defensive PPG: " + t.getDefensePPG();
-                        } catch (IOException e) {//if for some reason TournamentInfo is not working, it
-                                // will display info not found
-                                infoText += "Info for " + displayName + "not found";
-                        }
-                        Tooltip tooltip = new Tooltip();
-                        tooltip.setText(infoText);
-                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
                 }
         }
 }

@@ -88,20 +88,23 @@ public class ScoreBoardTable {
 
     //Ying's code, method addPlayer adds a player to the Bracket
     public void addPlayer(Bracket name, int score) {
-        try {
-            if (scores == null) {
-                scores = new HashMap<Bracket, Integer>();
+        //Samuel Hernandez: Added if clause so that only complete brackets are graded.
+        if(name.isComplete()) {
+            try {
+                if (scores == null) {
+                    scores = new HashMap<Bracket, Integer>();
+                }
+                //only allow to update the existing player score or add new player if there
+                //is less than 16 players
+                if (scores.get(name) != null || scores.size() < MAX_PLAYER_NUMBER) {
+                    scores.put(name, score);
+                    data.add(name);
+                    table.sort();
+                    //System.out.println("added: " + name.getPlayerName() + " " + score);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            //only allow to update the existing player score or add new player if there
-            //is less than 16 players
-            if (scores.get(name) != null || scores.size() < MAX_PLAYER_NUMBER) {
-                scores.put(name, score);
-                data.add(name);
-                table.sort();
-                //System.out.println("added: " + name.getPlayerName() + " " + score);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 

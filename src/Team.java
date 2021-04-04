@@ -40,7 +40,7 @@ public class Team{
     defensePPG = dPPG;
     this.logoRef = logoRef;
     this.fullName = fullname;
-
+    splitInfo();
   }
 
   /**
@@ -143,5 +143,20 @@ public class Team{
 
   public String getLogoRef() {
     return logoRef;
+  }
+
+  private void splitInfo() {
+    int spaceCount = 0;
+    for (int i = 0; i < info.length(); i++) {
+      if (info.charAt(i) == ' ') {
+        spaceCount++;
+      }
+      if (spaceCount == 8) {
+        StringBuilder newInfo = new StringBuilder(info);
+        newInfo.setCharAt(i,'\n');
+        info = newInfo.toString();
+        spaceCount = 0;
+      }
+    }
   }
 }
