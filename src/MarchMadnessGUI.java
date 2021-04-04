@@ -72,6 +72,7 @@ public class MarchMadnessGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         //try to load all the files, if there is an error display it
         try{
             teamInfo=new TournamentInfo();
@@ -104,6 +105,8 @@ public class MarchMadnessGUI extends Application {
         login();
         setActions();
         root.setTop(toolBar);
+        Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
+
 
         BorderPane.setAlignment(btoolBar, Pos.CENTER);
         root.setBottom(btoolBar);
@@ -114,6 +117,7 @@ public class MarchMadnessGUI extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+        welcomeMsg();
     }
 
     /**
@@ -121,6 +125,14 @@ public class MarchMadnessGUI extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    //Added by Alex
+    private void welcomeMsg() {
+        Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
+        alert.setTitle("Welcome Message");
+        alert.setHeaderText("March Madness Simulator");
+        alert.show();
     }
 
 
