@@ -82,7 +82,7 @@ public class MarchMadnessGUI extends Application {
         loginP=createLogin();
         CreateToolBars();
 
-
+        //Harjit Singh: ToolTip and Background Image.
         Image img = new Image("ncaa.jpg");
         root.setBackground(new Background(new BackgroundImage(img,BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
@@ -102,6 +102,7 @@ public class MarchMadnessGUI extends Application {
 
 
         //display login screen
+
         login();
         setActions();
         root.setTop(toolBar);
@@ -112,7 +113,7 @@ public class MarchMadnessGUI extends Application {
         primaryStage.setMaximized(true);
 
         primaryStage.setTitle("March Madness Bracket Simulator");
-
+        primaryStage.getIcons().add(new Image(this.getClass().getResource("logo.png").toString()));
         primaryStage.setScene(scene);
         primaryStage.show();
         welcomeMsg();
@@ -126,11 +127,21 @@ public class MarchMadnessGUI extends Application {
     }
 
     //Added by Alex
-    private void welcomeMsg() {
+    private Alert welcomeMsg() {
         Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
-        alert.setTitle("Welcome Message");
+        alert.setTitle("Welcome");
         alert.setHeaderText("March Madness Simulator");
+        // Create the ImageView we want to use for the icon
+        ImageView icon = new ImageView("logo.png");
+
+        // The standard Alert icon size is 48x48, so let's resize our icon to match
+        icon.setFitHeight(48);
+        icon.setFitWidth(48);
+
+        // Set our new ImageView as the alert's icon
+        alert.getDialogPane().setGraphic(icon);
         alert.show();
+        return alert;
     }
 
 
@@ -144,7 +155,7 @@ public class MarchMadnessGUI extends Application {
         //cant login and restart prog after simulate
         simulate.setDisable(true);
         logout.setDisable(false);
-
+        quit.setDisable(false);
         scoreBoardButton.setDisable(false);
         viewBracketButton.setDisable(false);
         viewMine.setDisable(false);
@@ -172,6 +183,11 @@ public class MarchMadnessGUI extends Application {
         displayPane(loginP);
     }
 
+    /**
+     * @author Harjit Singh, 04/04/2021
+     * Displays Alert message to logout
+     * Displays the login screen
+     */
     private void logout() {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Logout");
@@ -244,24 +260,41 @@ public class MarchMadnessGUI extends Application {
             displayPane(bracketPane);
         }
     }
-
-    private void help(){
+    /**
+     * @author Harjit Singh, 04/04/2021
+     * Displays Alert message to Help
+     */
+    private Alert help(){
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Help");
         alert.setHeaderText(null);
         alert.setContentText("-Click on which team you think would win the match" +
-                "\n-Click clear to undo the last change" +
-                "\n-Click on reset to reset all the brackets" +
-                "\n-Click finalize to submit the brackets" +
-                "\n-Hover over teams to view their information");
+                              "\n-Click clear to undo the last change" +
+                              "\n-Click on reset to reset all the brackets" +
+                              "\n-Click finalize to submit the brackets" +
+                              "\n-Hover over teams to view their information");
 
-        alert.showAndWait();
+        ImageView icon = new ImageView("logo.png");
+
+        // The standard Alert icon size is 48x48, so let's resize our icon to match
+        icon.setFitHeight(48);
+        icon.setFitWidth(48);
+
+        // Set our new ImageView as the alert's icon
+        alert.getDialogPane().setGraphic(icon);
+        alert.show();
+        return alert;
     }
-
+    /**
+     * @author Harjit Singh, 04/04/2021
+     * Displays Alert message to Quit OK or Cancel
+     * Ok to exit the window
+     * Cancel to stay on Brackets
+     */
 
     private void close(){
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
+        alert.setTitle(" Quit ");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure want to Exit?");
 
@@ -304,6 +337,7 @@ public class MarchMadnessGUI extends Application {
 
     /**
      * Creates toolBar and buttons.
+     * @editor by Harjit Singh
      * adds buttons to the toolbar and saves global references to them
      */
     private void CreateToolBars(){
@@ -323,11 +357,11 @@ public class MarchMadnessGUI extends Application {
         quit =new Button("Quit");
         toolBar.getItems().addAll(
                 createSpacer(),
-                logout,
                 simulate,
                 scoreBoardButton,
                 viewBracketButton,
                 viewMine,
+                logout,
                 createSpacer(),
                 help
         );
@@ -399,7 +433,7 @@ public class MarchMadnessGUI extends Application {
 
         /*
         LoginPane
-        Modified by Alexander
+        @editor by Alexander
          */
 
         GridPane loginPane = new GridPane();
