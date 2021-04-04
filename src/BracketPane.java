@@ -80,8 +80,11 @@ public class BracketPane extends BorderPane {
                         clearAbove(nextTreeNum);
                 }
         }
-        
-        
+
+
+        /**
+         * Clear.
+         */
         public void clear(){
             clearSubtree(displayedSubtree);
         }
@@ -163,6 +166,11 @@ public class BracketPane extends BorderPane {
 
         };
 
+        /**
+         * Gets full pane.
+         *
+         * @return the full pane
+         */
         public GridPane getFullPane() {
                 return fullPane;
         }
@@ -177,6 +185,8 @@ public class BracketPane extends BorderPane {
         /**
          * TODO: Reduce. reuse, recycle!
          * Initializes the properties needed to construct a bracket.
+         *
+         * @param currentBracket the current bracket
          */
         public BracketPane(Bracket currentBracket) {
                 this.currentBracket = currentBracket;
@@ -274,6 +284,7 @@ public class BracketPane extends BorderPane {
         /**
          * Method adds labels to now what round teams are on, when making selection in individual sections
          * of the bracket.
+         *
          * @param index the section to add the labels to.
          * @author Samuel Hernandez (Based on Ariel Liberzon's code)
          */
@@ -343,6 +354,7 @@ public class BracketPane extends BorderPane {
 
         /**
          * Method sets the visible pane on command (Either of the 4 little or the full pane)
+         *
          * @param index the pane to set visible
          * @author Samuel Hernandez
          */
@@ -354,6 +366,11 @@ public class BracketPane extends BorderPane {
                 roundsForDivsions(index);                       //Add round labels
         }
 
+        /**
+         * Gets displayed subtree.
+         *
+         * @return the displayed subtree
+         */
         public int getDisplayedSubtree() {
                 return displayedSubtree;
         }
@@ -393,7 +410,6 @@ public class BracketPane extends BorderPane {
                 stackPane.setAlignment(Pos.TOP_CENTER);
                 return stackPane;
         }
-
 
 
         /**
@@ -451,14 +467,17 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * @return true if the current-bracket is complete and the value
-         * of finalized is also true.
+         * Is finalized boolean.
+         *
+         * @return true if the current-bracket is complete and the value of finalized is also true.
          */
         public boolean isFinalized() {
                 return currentBracket.isComplete() && finalized;
         }
 
         /**
+         * Sets finalized.
+         *
          * @param isFinalized The value to set finalized to.
          */
         public void setFinalized(boolean isFinalized) {
@@ -481,6 +500,11 @@ public class BracketPane extends BorderPane {
                 return pane;
         }
 
+        /**
+         * Create final four pane.
+         *
+         * @return the pane
+         */
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
                 finalPane.setMinWidth(400.0);
@@ -548,6 +572,13 @@ public class BracketPane extends BorderPane {
                 //Samuel Hernandez. Holds the number of the root.
                 private int number;
 
+                /**
+                 * Instantiates a new Root.
+                 *
+                 * @param location     the location
+                 * @param divisionName the division name
+                 * @param number       the number
+                 */
                 public Root(int location, String divisionName, int number) {
                         this.location = location;
                         this.number = number;
@@ -646,10 +677,10 @@ public class BracketPane extends BorderPane {
                  * Creates a BracketNode with,
                  *
                  * @param displayName The name if any
-                 * @param x        The starting x location
-                 * @param y        The starting y location
-                 * @param rX       The width of the rectangle to fill pane
-                 * @param rY       The height of the rectanglej
+                 * @param x           The starting x location
+                 * @param y           The starting y location
+                 * @param rX          The width of the rectangle to fill pane
+                 * @param rY          The height of the rectanglej
                  */
                 public BracketNode(String displayName, int x, int y, int rX, int rY) {
                         this.setLayoutX(x);
@@ -665,6 +696,8 @@ public class BracketPane extends BorderPane {
                 }
 
                 /**
+                 * Gets name.
+                 *
                  * @return displayName The teams name.
                  */
                 public String getName() {
@@ -672,6 +705,8 @@ public class BracketPane extends BorderPane {
                 }
 
                 /**
+                 * Sets name.
+                 *
                  * @param displayName The name to assign to the node.
                  */
                 public void setName(String displayName) {
