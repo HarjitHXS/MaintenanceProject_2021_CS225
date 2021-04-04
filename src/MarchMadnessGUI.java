@@ -105,8 +105,6 @@ public class MarchMadnessGUI extends Application {
         login();
         setActions();
         root.setTop(toolBar);
-        Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
-
 
         BorderPane.setAlignment(btoolBar, Pos.CENTER);
         root.setBottom(btoolBar);
