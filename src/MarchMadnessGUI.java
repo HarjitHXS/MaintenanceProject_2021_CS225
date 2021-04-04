@@ -247,12 +247,13 @@ public class MarchMadnessGUI extends Application {
 
     private void help(){
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(" Help");
+        alert.setTitle("Help");
         alert.setHeaderText(null);
-        alert.setContentText("User can select each bracket and choose the team " + "\n"
-                + "\n" + " click clear to undo the last change "+ "\n" +
-                "\n"+" click on reset to reset all the brackets "+
-                "\n"+" click finalize to submit the brackets ");
+        alert.setContentText("-Click on which team you think would win the match" +
+                "\n-Click clear to undo the last change" +
+                "\n-Click on reset to reset all the brackets" +
+                "\n-Click finalize to submit the brackets" +
+                "\n-Hover over teams to view their information");
 
         alert.showAndWait();
     }
