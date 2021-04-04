@@ -96,11 +96,26 @@ public class MarchMadnessGUI extends Application {
         table=scoreBoard.start();
         loginP=createLogin();
         CreateToolBars();
+
+
         Image img = new Image("ncaa.jpg");
         root.setBackground(new Background(new BackgroundImage(img,BackgroundRepeat.REPEAT,
                 BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT)));
+        simulate.setTooltip(new Tooltip("view the simulate"));
+        logout.setTooltip(new Tooltip("Click here to Logout"));
+        scoreBoardButton.setTooltip(new Tooltip("Click here to ScoreBoard"));
+        viewBracketButton.setTooltip(new Tooltip("Click here to viewBracket"));
+        clearButton.setTooltip(new Tooltip("Click here to clear "));
+        resetButton.setTooltip(new Tooltip("Click here to reset all Brackets"));
+        finalizeButton.setTooltip(new Tooltip("Click here to Finalize"));
+        help.setTooltip(new Tooltip("Click here to Help"));
+        quit.setTooltip(new Tooltip("Click here to Quit"));
+        viewMine.setTooltip(new Tooltip("Click here to see your Bracket"));
+
+
+
         //display login screen
         login();
         setActions();
@@ -175,23 +190,20 @@ public class MarchMadnessGUI extends Application {
         displayPane(loginP);
     }
     private void logout() {
-        Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to logout?");
+        alert.setContentText("Are you sure want to Logout?");
 
-        alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.CANCEL){
+            // ... user chose OK
+        }
+        // ... user chose CANCEL or closed the dialog
+        else
+            login();
 
-        logout.setDisable(true);
-        simulate.setDisable(true);
-        scoreBoardButton.setDisable(true);
-        viewBracketButton.setDisable(true);
-        viewMine.setDisable(true);
-        clearButton.setDisable(true);
-        btoolBar.setDisable(true);
-        displayPane(loginP);
     }
-
     /**
      * Displays the score board
      *

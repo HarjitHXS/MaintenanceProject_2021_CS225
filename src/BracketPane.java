@@ -106,34 +106,7 @@ public class BracketPane extends BorderPane {
                         }
                 }
                 //added by matt 5/7, shows the teams info if you right click
-                else if (mouseEvent.getButton().equals(MouseButton.SECONDARY)) {
-                        String text = "";
-                        String logoRef = "";
-                        BracketNode n = (BracketNode) mouseEvent.getSource();
-                        int treeNum = bracketMap.get(n);
-                        String displayName = currentBracket.getBracket().get(treeNum);
-                        if (info != null) {
-                                Team t = info.getTeam(displayName);
-                                logoRef = t.getLogoRef();
-                                //by Tyler - added the last two pieces of info to the pop up window
-                                text += "Team: " + t.getFullName() + " | Ranking: " + t.getRanking()
-                                        + "\nMascot: " + t.getNickname() + "\nInfo: " + t.getInfo()
-                                        + "\nAverage Offensive PPG: " + t.getOffensePPG()
-                                        + "\nAverage Defensive PPG: "+ t.getDefensePPG();
-                        } else {//if for some reason TournamentInfo is not working, it
-                                // will display info not found
-                                text += "Info for " + displayName + "not found";
-                        }
 
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, text, ButtonType.CLOSE);
-                        alert.setTitle("Team Information");
-                        alert.setHeaderText(null);
-
-                        alert.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
-
-                        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-                        alert.showAndWait();
-                }
         };
         /**
          * Handles mouseEntered events for BracketNode objects
@@ -153,6 +126,7 @@ public class BracketPane extends BorderPane {
                                 + "\nAverage Defensive PPG: "+ t.getDefensePPG();
                         tooltip.setText(text);
                         tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
+                        tooltip.setTextAlignment(TextAlignment.CENTER);
                 }
         };
 
