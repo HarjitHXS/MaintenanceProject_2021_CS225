@@ -467,7 +467,7 @@ public class MarchMadnessGUI extends Application {
                         chooseBracket();
                     }
                     else
-                        infoAlert("Password and confirm Password do not match. Please try again");
+                        infoAlert("Passwords do not match! Please try again.");
                 }else{
                     infoAlert("The password you have entered is incorrect!");
                 }

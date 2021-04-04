@@ -4,9 +4,12 @@ import java.awt.*;
 /**
  * 
  * @author Shivanie and Tyler
- * @description 
- *       Team class holds all the information for individual teams. Their displayName, info, and ranking.
- *       
+ * @editor Ariel Liberzon
+ * @description
+ *       Team class holds all the information for individual teams. Their name, info, and ranking.
+ *       Now every team also has a display name which may be shorter than the full name to avoid
+ *       clipping issues in the bracket. Every team also has a string that contains the file name
+ *       of its logo
  */
 
 public class Team{
@@ -19,7 +22,6 @@ public class Team{
   private String logoRef;
   public double offensePPG;
   public double defensePPG;
-  private ImageView logo;
   
   /**
    * Constructor
@@ -145,6 +147,10 @@ public class Team{
     return logoRef;
   }
 
+  /** Team information is now given new line characters so that when it is displayed
+   * using tooltip the format no longer looks too lonf
+   * @author Ariel Liberzon
+   */
   private void splitInfo() {
     int spaceCount = 0;
     for (int i = 0; i < info.length(); i++) {
