@@ -38,7 +38,7 @@ import javafx.stage.Stage;
  * with and controls the actions of other objects.
  *
  * @author Grant Osborn
- * @Editors Ariel Liberzon, Justin Valas, Harjit Singh, Alexander Tang and Samuel Hernandez
+ * Editors: Ariel Liberzon, Justin Valas, Harjit Singh, Alexander Tang and Samuel Hernandez
  */
 public class MarchMadnessGUI extends Application {
 
@@ -456,6 +456,7 @@ public class MarchMadnessGUI extends Application {
     /**
      * Gets clear button so that bracket pane can enable or disable the clear button depending on what
      * section the user chooses.
+     * @return Clear Button
      * @author Samuel Hernandez
      */
     public static Button getButton(){
