@@ -528,7 +528,8 @@ public class BracketPane extends BorderPane {
         }
 
         /**
-         * Create final four pane.
+         * Create final four pane,
+         * the center of the 'Full' bracket.
          * @edited by Justin Valas
          *
          * @return the pane
@@ -536,6 +537,7 @@ public class BracketPane extends BorderPane {
         public Pane createFinalFour() {
                 Pane finalPane = new Pane();
                 finalPane.setMinWidth(400.0);
+                //Creates the middle three Bracket Nodes:    -JV
                 BracketNode nodeFinal0 = new BracketNode("", 175, 272, 70, 20);
                 BracketNode nodeFinal1 = new BracketNode("", 70, 380, 75, 20);
                 BracketNode nodeFinal2 = new BracketNode("", 260, 480, 80, 20);
@@ -559,18 +561,21 @@ public class BracketPane extends BorderPane {
                 finalPane.getChildren().add(nodeFinal1);
                 finalPane.getChildren().add(nodeFinal2);
 
+                //Creates the box that contains the champion bracket node:    -JV
                 Rectangle rect = new Rectangle(100,260,200,40);
                 rect.setFill(Color.TRANSPARENT);
                 rect.setStroke(Color.BLACK);
                 rect.setStrokeWidth(2);
                 finalPane.getChildren().add(rect);
 
+                //Creates the label for the champion box:    -JV
                 Label lblChamp = new Label("National Champion");
                 lblChamp.setStyle("-fx-font: 20px 'Futura'; -fx-text-fill: #16284f");
                 lblChamp.setLayoutX(115);
                 lblChamp.setLayoutY(305);
                 finalPane.getChildren().add(lblChamp);
 
+                //Creates lines for the two finalists nodes:    -JV
                 Line line1 = new Line(0,220,0,620);
                 Line line2 = new Line(400,220,400,620);
                 Line line3 = new Line(0,400,200,400);
