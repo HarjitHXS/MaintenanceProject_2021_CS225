@@ -529,6 +529,7 @@ public class BracketPane extends BorderPane {
 
         /**
          * Create final four pane.
+         * @edited by Justin Valas
          *
          * @return the pane
          */
