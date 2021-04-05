@@ -293,7 +293,6 @@ public class MarchMadnessGUI extends Application {
      * @author Harjit Singh, 04/04/2021
      * Displays Alert message to Help
      */
-
     private Alert help(){
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Help");
@@ -327,7 +326,6 @@ public class MarchMadnessGUI extends Application {
      * Ok to exit the window
      * Cancel to stay on Brackets
      */
-
     private void close(){
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle(" Quit ");
@@ -483,7 +481,6 @@ public class MarchMadnessGUI extends Application {
         LoginPane
         @editor by Alexander
          */
-
         GridPane loginPane = new GridPane();
 
 
