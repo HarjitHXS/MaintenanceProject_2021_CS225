@@ -24,12 +24,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- *  MarchMadnessGUI
- * 
- * this class contains the buttons the user interacts
- * with and controls the actions of other objects 
+ * MarchMadnessGUI
+ *
+ * This application provides users the chance to predict the outcome of the NCAA tournament.
+ * Users are able to login into the application place their predictions through this simple GUI that allows them to
+ * decide which teams will win matches and move on to next rounds.
+ * After the user completes a bracket the program is capable of simulating the tournament.
+ * At the end the user's prediction gets graded depending on how well the user predicted the outcome of the games.
+ * Also, to make it more fun the user is able to see how many points he or she scored
+ * and also how many points other users got.
+ *
+ * This class contains the buttons the user interacts
+ * with and controls the actions of other objects.
  *
  * @author Grant Osborn
+ * @Editors Ariel Liberzon, Justin Valas, Harjit Singh, Alexander Tang and Samuel Hernandez
  */
 public class MarchMadnessGUI extends Application {
 
@@ -60,6 +69,10 @@ public class MarchMadnessGUI extends Application {
     private GridPane loginP;
     private TournamentInfo teamInfo;
 
+    /**
+     * Method initializes the GUI and initializes basic components for the application to run.
+     * @param primaryStage the stage to start
+     */
     @Override
     public void start(Stage primaryStage) {
         //try to load all the files, if there is an error display it
@@ -129,16 +142,18 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * Launches the GUI
+     * @param args The command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**@author Alex, 04/04/2021
-     * @edited by Harjit singh
+    /**
+     * Creates a pop up window upon startup
+     * @author Alex, 04/04/2021
+     * @editor by Harjit singh
      */
-
     private Alert welcomeMsg() {
         Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
         alert.setTitle("Welcome");
@@ -164,12 +179,11 @@ public class MarchMadnessGUI extends Application {
 
 
     /**
-     * simulates the tournament  
-     * simulation happens only once and
-     * after the simulation no more users can login
+     * This method simulates the tournament, it also enables the proper buttons and components.
+     * It grades the brackets depending on correct predictions.
      */
-    private void simulate(){
-        //cant login and restart prog after simulate
+    private void simulate() {
+        //cant login and restart program after simulate
         simulate.setDisable(true);
         logout.setDisable(false);
         quit.setDisable(false);
@@ -186,8 +200,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Displays the login screen
-     *
+     * Displays the login screen in order to allow users to login to the application
      */
     private void login(){
         logout.setDisable(true);
@@ -221,15 +234,16 @@ public class MarchMadnessGUI extends Application {
 
     }
     /**
-     * Displays the score board
-     *
+     * Method displays the scoreboard. In the score board the users can see how many points they got
+     * based on their predictions.
      */
     private void scoreBoard(){
         displayPane(table);
     }
 
     /**
-     * Displays Simulated Bracket
+     * This method is called when the view simulated bracket button is pressed and lets the user see what was
+     * the result of the simulated tournament.
      *
      */
     private void viewBracket(){
@@ -241,8 +255,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * allows user to choose bracket
-     *
+     * This method is called after logging in to allow user to graphically select a division or the full bracket.
      */
     private void chooseBracket(){
         //login.setDisable(true);
@@ -250,24 +263,22 @@ public class MarchMadnessGUI extends Application {
         logout.setDisable(false);
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
-
     }
+
     /**
-     * resets current selected sub tree
-     * for final4 reset Ro2 and winner
+     * Resets the division the user is working in (East, West etc.) clearing all choices in that division.
      */
     private void clear(){
         int visible = bracketPane.getDisplayedSubtree() - 3;
         bracketPane.clear();
         bracketPane=new BracketPane(selectedBracket);
         displayPane(bracketPane);
-
         //Samuel Hernandez: Added functionality to not be kicked out of division when clearing.
         bracketPane.setVisiblePane(visible);
     }
 
     /**
-     * resets entire bracket
+     * Resets entire bracket
      */
     private void reset(){
         if(confirmReset()){
@@ -332,6 +343,10 @@ public class MarchMadnessGUI extends Application {
             System.exit(0);
     }
 
+    /**
+     * This method allows the user to finalize the bracket, meaning they are done with their prediction allowing them
+     * to simulate the tournament and view their results.
+     */
     private void finalizeBracket(){
         if(bracketPane.isComplete()){
             btoolBar.setDisable(true);
@@ -350,8 +365,7 @@ public class MarchMadnessGUI extends Application {
 
 
     /**
-     * displays element in the center of the screen
-     *
+     * Displays element in the center of the screen
      * @param p must use a subclass of Pane for layout. 
      * to be properly center aligned in  the parent node
      */
@@ -377,8 +391,13 @@ public class MarchMadnessGUI extends Application {
         resetButton=new Button("Reset");
         finalizeButton=new Button("Finalize");
         back=new Button("Choose Division");
-        img1 = new Image("about.png");
-        help =new Button("Help",new ImageView(img1));
+        try {
+            img1 = new Image("about.png");
+            help = new Button("Help", new ImageView(img1));
+        } catch (Exception e){
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
+
         quit =new Button("Quit");
         toolBar.getItems().addAll(
                 createSpacer(),
@@ -402,7 +421,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * sets the actions for each button
+     * Sets the actions for each button
      */
     private void setActions(){
         logout.setOnAction(e->logout());
@@ -423,7 +442,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Method to allow user to see his/her prediction of the tournament and not only the results
+     * Method to allow user to see his/her prediction of the tournament to be able to compare with the simulation
      * @author Samuel Hernandez
      */
     private void viewMine(){
@@ -452,7 +471,10 @@ public class MarchMadnessGUI extends Application {
         return spacer;
     }
 
-
+    /**
+     * Creates a pane with login functionality
+     * @return the pane with the login prompt
+     */
     private GridPane createLogin(){
 
 
@@ -489,7 +511,7 @@ public class MarchMadnessGUI extends Application {
         passwordField.setPromptText("Password");
         loginPane.add(passwordField, 1, 2);
 
-        Label confirmPassword = new Label("Confirm Password: ");
+        Label confirmPassword = new Label("Confirm Password:");
         confirmPassword.setTextFill(Color.WHITE);
         loginPane.add(confirmPassword, 0, 3);
 
@@ -560,8 +582,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * addAllToMap
-     * adds all the brackets to the map for login
+     * Adds all the brackets to the map for login
      */
     private void addAllToMap(){
         for(Bracket b:playerBrackets){
@@ -593,7 +614,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * alerts user to the result of their actions in the login pane
+     * Alerts user to the result of their actions in the login pane
      * @param msg the message to be displayed to the user
      */
     private void infoAlert(String msg){
@@ -620,8 +641,8 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Tayon Watson 5/5
-     * seralizedBracket
+     * Serializes a bracket
+     * @author Tayon Watson 5/5
      * @param B The bracket the is going to be seralized
      */
     private void seralizeBracket(Bracket B){
@@ -641,10 +662,10 @@ public class MarchMadnessGUI extends Application {
         }
     }
     /**
-     * Tayon Watson 5/5
-     * deseralizedBracket
+     * De-seralizes a Bracket
      * @param filename of the seralized bracket file
      * @return deserialized bracket
+     * @author Tayon Watson 5/5
      */
     private Bracket deseralizeBracket(String filename){
         Bracket bracket = null;
@@ -664,9 +685,9 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Tayon Watson 5/5
-     * deseralizedBracket
-     * @return deserialized bracket
+     *  Loads the brackets
+     *  @return an array list of brackets
+     *  @author Tayon Watson 5/5
      */
     private ArrayList<Bracket> loadBrackets()
     {
