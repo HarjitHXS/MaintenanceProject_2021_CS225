@@ -14,6 +14,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -264,7 +266,11 @@ public class BracketPane extends BorderPane {
                                 + "\nAverage Offensive PPG: " + t.getOffensePPG()
                                 + "\nAverage Defensive PPG: "+ t.getDefensePPG();
                         tooltip.setText(text);
-                        tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/"+logoRef).toString()));
+                        try {
+                                tooltip.setGraphic(new ImageView(this.getClass().getResource("Icons/" + logoRef).toString()));
+                        } catch (Exception e) {
+                                tooltip.setText(text + "\nMissing Logo!");
+                        }
                 }
         };
 
