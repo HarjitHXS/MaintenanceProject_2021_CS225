@@ -24,9 +24,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- *  MarchMadnessGUI
+ * MarchMadnessGUI
  * 
- * this class contains the buttons the user interacts
+ * This class contains the buttons the user interacts
  * with and controls the actions of other objects 
  *
  * @author Grant Osborn
@@ -129,16 +129,17 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * @param args The command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**@author Alex, 04/04/2021
-     * @edited by Harjit singh
+    /**
+     * Creates a pop up window upon startup
+     * @author Alex, 04/04/2021
+     * @editor by Harjit singh
      */
-
     private Alert welcomeMsg() {
         Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
         alert.setTitle("Welcome");
@@ -168,8 +169,8 @@ public class MarchMadnessGUI extends Application {
      * simulation happens only once and
      * after the simulation no more users can login
      */
-    private void simulate(){
-        //cant login and restart prog after simulate
+    private void simulate() {
+        //cant login and restart program after simulate
         simulate.setDisable(true);
         logout.setDisable(false);
         quit.setDisable(false);
@@ -187,7 +188,6 @@ public class MarchMadnessGUI extends Application {
 
     /**
      * Displays the login screen
-     *
      */
     private void login(){
         logout.setDisable(true);
@@ -489,7 +489,7 @@ public class MarchMadnessGUI extends Application {
         passwordField.setPromptText("Password");
         loginPane.add(passwordField, 1, 2);
 
-        Label confirmPassword = new Label("Confirm Password: ");
+        Label confirmPassword = new Label("Confirm Password:");
         confirmPassword.setTextFill(Color.WHITE);
         loginPane.add(confirmPassword, 0, 3);
 
