@@ -377,8 +377,13 @@ public class MarchMadnessGUI extends Application {
         resetButton=new Button("Reset");
         finalizeButton=new Button("Finalize");
         back=new Button("Choose Division");
-        img1 = new Image("about.png");
-        help =new Button("Help",new ImageView(img1));
+        try {
+            img1 = new Image("about.png");
+            help = new Button("Help", new ImageView(img1));
+        } catch (Exception e){
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
+
         quit =new Button("Quit");
         toolBar.getItems().addAll(
                 createSpacer(),
