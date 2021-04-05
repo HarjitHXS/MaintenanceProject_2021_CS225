@@ -25,11 +25,20 @@ import javafx.stage.Stage;
 
 /**
  * MarchMadnessGUI
- * 
+ *
+ * This application provides users the chance to predict the outcome of the NCAA tournament.
+ * Users are able to login into the application place their predictions through this simple GUI that allows them to
+ * decide which teams will win matches and move on to next rounds.
+ * After the user completes a bracket the program is capable of simulating the tournament.
+ * At the end the user's prediction gets graded depending on how well the user predicted the outcome of the games.
+ * Also, to make it more fun the user is able to see how many points he or she scored
+ * and also how many points other users got.
+ *
  * This class contains the buttons the user interacts
- * with and controls the actions of other objects 
+ * with and controls the actions of other objects.
  *
  * @author Grant Osborn
+ * @Editors Ariel Liberzon, Justin Valas, Harjit Singh, Alexander Tang and Samuel Hernandez
  */
 public class MarchMadnessGUI extends Application {
 
@@ -60,6 +69,10 @@ public class MarchMadnessGUI extends Application {
     private GridPane loginP;
     private TournamentInfo teamInfo;
 
+    /**
+     * Method initializes the GUI and initializes basic components for the application to run.
+     * @param primaryStage the stage to start
+     */
     @Override
     public void start(Stage primaryStage) {
         //try to load all the files, if there is an error display it
@@ -129,6 +142,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
+     * Launches the GUI
      * @param args The command line arguments
      */
     public static void main(String[] args) {
@@ -165,9 +179,8 @@ public class MarchMadnessGUI extends Application {
 
 
     /**
-     * simulates the tournament  
-     * simulation happens only once and
-     * after the simulation no more users can login
+     * This method simulates the tournament, it also enables the proper buttons and components.
+     * It grades the brackets depending on correct predictions.
      */
     private void simulate() {
         //cant login and restart program after simulate
@@ -187,7 +200,7 @@ public class MarchMadnessGUI extends Application {
     }
 
     /**
-     * Displays the login screen
+     * Displays the login screen in order to allow users to login to the application
      */
     private void login(){
         logout.setDisable(true);
