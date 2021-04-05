@@ -33,7 +33,7 @@ public class Team{
    * 		The ranking in the team region from 1 to 16
    */
   public Team(String displayName, String nickname, String info, int ranking,
-              double oPPG, double dPPG, String logoRef, String fullname){
+              double oPPG, double dPPG, String logoRef, String fullName){
     this.displayName = displayName;
     this.nickname = nickname;
     this.info = info;
@@ -41,7 +41,7 @@ public class Team{
     offensePPG = oPPG;
     defensePPG = dPPG;
     this.logoRef = logoRef;
-    this.fullName = fullname;
+    this.fullName = fullName;
     splitInfo();
   }
 

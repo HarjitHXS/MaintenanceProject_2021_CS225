@@ -126,7 +126,10 @@ public class MarchMadnessGUI extends Application {
         launch(args);
     }
 
-    //Added by Alex
+    /**@author Alex, 04/04/2021
+     * @edited by Harjit singh
+     */
+
     private Alert welcomeMsg() {
         Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
         alert.setTitle("Welcome");
@@ -260,10 +263,12 @@ public class MarchMadnessGUI extends Application {
             displayPane(bracketPane);
         }
     }
+
     /**
      * @author Harjit Singh, 04/04/2021
      * Displays Alert message to Help
      */
+
     private Alert help(){
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Help");
@@ -285,6 +290,7 @@ public class MarchMadnessGUI extends Application {
         alert.show();
         return alert;
     }
+
     /**
      * @author Harjit Singh, 04/04/2021
      * Displays Alert message to Quit OK or Cancel
