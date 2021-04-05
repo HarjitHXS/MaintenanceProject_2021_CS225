@@ -92,8 +92,9 @@ public class BracketPane extends BorderPane {
          * Initializes the properties needed to construct a bracket.
          * The constructor now includes methods that display the rounds
          * above the corresponding place in the bracket
-         * @editor Ariel Liberzon
+         *
          * @param currentBracket the current bracket
+         * @editor Ariel Liberzon
          */
         public BracketPane(Bracket currentBracket) {
                 this.currentBracket = currentBracket;
@@ -286,6 +287,7 @@ public class BracketPane extends BorderPane {
 
         /**
          * Gets full pane.
+         *
          * @return the full pane
          */
         public GridPane getFullPane() {
