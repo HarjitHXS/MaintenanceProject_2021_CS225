@@ -83,11 +83,16 @@ public class MarchMadnessGUI extends Application {
         CreateToolBars();
 
         //Harjit Singh: ToolTip and Background Image.
-        Image img = new Image("ncaa.jpg");
-        root.setBackground(new Background(new BackgroundImage(img,BackgroundRepeat.REPEAT,
-                BackgroundRepeat.REPEAT,
-                BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT)));
+        try {
+            Image img = new Image("ncaa.jpg");
+            root.setBackground(new Background(new BackgroundImage(img, BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT)));
+        }
+        catch (Exception e) {
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
         simulate.setTooltip(new Tooltip("view the simulate"));
         logout.setTooltip(new Tooltip("Click here to Logout"));
         scoreBoardButton.setTooltip(new Tooltip("Click here to ScoreBoard"));
@@ -113,7 +118,11 @@ public class MarchMadnessGUI extends Application {
         primaryStage.setMaximized(true);
 
         primaryStage.setTitle("March Madness Bracket Simulator");
-        primaryStage.getIcons().add(new Image(this.getClass().getResource("logo.png").toString()));
+        try {
+            primaryStage.getIcons().add(new Image(this.getClass().getResource("logo.png").toString()));
+        }catch (Exception e) {
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
         primaryStage.setScene(scene);
         primaryStage.show();
         welcomeMsg();
@@ -134,15 +143,20 @@ public class MarchMadnessGUI extends Application {
         Alert alert = new Alert(AlertType.INFORMATION, "Welcome to the March Madness Simulator Game.");
         alert.setTitle("Welcome");
         alert.setHeaderText("March Madness Simulator");
-        // Create the ImageView we want to use for the icon
-        ImageView icon = new ImageView("logo.png");
+        try {
+            // Create the ImageView we want to use for the icon
+            ImageView icon = new ImageView("logo.png");
 
-        // The standard Alert icon size is 48x48, so let's resize our icon to match
-        icon.setFitHeight(48);
-        icon.setFitWidth(48);
+            // The standard Alert icon size is 48x48, so let's resize our icon to match
+            icon.setFitHeight(48);
+            icon.setFitWidth(48);
 
-        // Set our new ImageView as the alert's icon
-        alert.getDialogPane().setGraphic(icon);
+            // Set our new ImageView as the alert's icon
+            alert.getDialogPane().setGraphic(icon);
+        }
+        catch (Exception e) {
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
         alert.show();
         return alert;
     }
@@ -278,15 +292,20 @@ public class MarchMadnessGUI extends Application {
                               "\n-Click on reset to reset all the brackets" +
                               "\n-Click finalize to submit the brackets" +
                               "\n-Hover over teams to view their information");
+        try {
+            ImageView icon = new ImageView("logo.png");
 
-        ImageView icon = new ImageView("logo.png");
+            // The standard Alert icon size is 48x48, so let's resize our icon to match
+            icon.setFitHeight(48);
+            icon.setFitWidth(48);
 
-        // The standard Alert icon size is 48x48, so let's resize our icon to match
-        icon.setFitHeight(48);
-        icon.setFitWidth(48);
+            // Set our new ImageView as the alert's icon
+            alert.getDialogPane().setGraphic(icon);
+        }
+        catch (Exception e) {
+            showError(new Exception("Can't find "+e.getMessage(),e),true);
+        }
 
-        // Set our new ImageView as the alert's icon
-        alert.getDialogPane().setGraphic(icon);
         alert.show();
         return alert;
     }
